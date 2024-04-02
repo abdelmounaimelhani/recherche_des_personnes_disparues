@@ -1,0 +1,208 @@
+<?php 
+class ASSOCIATION_MODEL
+{
+    public static function getindivid(){
+        $st = Connexion::Connexion()->prepare("SELECT MAX(id) as 'id' from individus ");
+        $st->execute();
+        $res = $st->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
+    public static function Creat_association($nom,$email,$tele,$ville,$adress,$passw,$photo){
+        //
+        $st = Connexion::Connexion()->prepare("INSERT INTO association(nom,email,tele,ville,adress,pass,photo) VALUES ( ?, ?, ?, ?, ?, ?, ?);");
+        $st->bindParam(1, $nom);
+        $st->bindParam(2, $email);
+        $st->bindParam(3, $tele);
+        $st->bindParam(4, $ville);
+        $st->bindParam(5, $adress);
+        $st->bindParam(6, $passw);
+        $st->bindParam(7, $photo);
+        $res = $st->execute();
+        
+        return $res;
+        
+    }
+
+    public static function Info_ass($id){
+        $st = Connexion::Connexion()->prepare("SELECT * FROM association WHERE id=?");
+        $st->bindParam(1, $id,PDO::PARAM_INT);
+        $st->execute();
+        $res=$st->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public static function EmailAsssexist($email)
+    {
+        //Vérifier l'existence d'une adresse e-mail.
+        $st = Connexion::Connexion()->prepare("SELECT count(*) as 'nb' FROM `association` a, `usertable` u WHERE a.email = '$email' OR u.email = '$email'");
+        $st->execute();
+        $res=$st->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public static function PassAss($email){
+        //mote de pass 
+        $st = Connexion::Connexion()->prepare("SELECT pass , id FROM association WHERE email=? ");
+        $st->bindParam(1, $email,PDO::PARAM_STR);
+        $st->execute();
+        $res=$st->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public static function Creat_indiv($nom, $prenom, $date_entre, $date_N, $photo, $ville, $HASH,$Gen)
+    {
+        $conn = Connexion::Connexion();
+        $st = $conn->prepare("INSERT INTO disparu (`nom`, `prenom`, `date_entre`, `date_N`, `photo`, `ville`, `HASH`, `Gennre`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+        $type="IND";
+        $st->bindParam(1, $nom);
+        $st->bindParam(2, $prenom);
+        $st->bindParam(3, $date_entre);
+        $st->bindParam(4, $date_N);
+        $st->bindParam(5, $photo);
+        $st->bindParam(6, $ville);
+        $st->bindParam(7, $HASH);
+        $st->bindParam(8, $Gen);
+        $st->bindParam(9,  $type);
+        return $st->execute();
+    }
+    
+    public static function get_indvs($HASH)
+    {
+        $st = Connexion::Connexion()->prepare("SELECT d.* FROM ass_hash a ,disparu d WHERE a.HASH_ID=d.`HASH` AND a.HASH_ID=:HASH_id ORDER BY d.id");
+        $st->bindParam(':HASH_id', $HASH, PDO::PARAM_STR);
+        $st->execute();
+        $res = $st->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
+    
+    public static function info_indiv($idind,$idAss){
+        $conn=Connexion::Connexion();
+        $st=$conn->prepare("SELECT * FROM individus WHERE id=:id AND Asso=:idas");
+        $st->bindParam(':id', $idind);
+        $st->bindParam(':idas', $idAss);
+        $st->execute();
+        $res = $st->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public static function edite_indiv($nom, $prenom, $date_entre, $date_N, $ville, $id, $Asso){
+        $conn=Connexion::Connexion();
+        $sql = "UPDATE individus 
+                SET nom = :nom, prenom = :prenom, date_entre = :date_entre, date_N = :date_N, ville = :ville
+                WHERE id = :id AND Asso = :Asso";
+        $st = $conn->prepare($sql);
+        $st->bindParam(':nom', $nom);
+        $st->bindParam(':prenom', $prenom);
+        $st->bindParam(':date_entre', $date_entre);
+        $st->bindParam(':date_N', $date_N);
+        $st->bindParam(':ville', $ville);
+        $st->bindParam(':id', $id);
+        $st->bindParam(':Asso', $Asso);
+        return $st->execute();
+
+    }
+    public static function Update_img($photo,$id,$Asso){
+        $conn=Connexion::Connexion();
+        $sql = "UPDATE individus 
+                SET  photo = :photo
+                WHERE id = :id AND Asso = :Asso";
+        $st = $conn->prepare($sql);
+        $st->bindParam(':photo', $photo);
+        $st->bindParam(':id', $id);
+        $st->bindParam(':Asso', $Asso);
+        $st->execute();
+    }
+
+    public static function delet_indiv($id,$asso){
+        $conn=Connexion::Connexion();
+        $st=$conn->prepare("DELETE FROM `individus` WHERE `id`=:id AND Asso=:Asso");
+        $st->bindParam(':id', $id);
+        $st->bindParam(':Asso', $asso);
+        return $st->execute();
+    }
+
+    public static function Commentair_Post_Ass($idP){
+        $st = Connexion::Connexion()->prepare(
+            "SELECT p.*,ass.nom FROM publication_comment p, association ass,ass_hash ah
+            WHERE ass.id=ah.id_ASS AND ah.HASH_ID=p.`HASH` AND id_publication = ?
+            ORDER BY p.date_comment DESC"
+        );
+        $st->bindParam(1, $idP ,PDO::PARAM_INT);
+        $st->execute();
+        $res= $st->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public static function Rcherch_Ass_nom($nom,$HASH){
+        if (!empty($nom)) { 
+            $st = Connexion::Connexion()->prepare(
+                "SELECT HASH_ID,nom,photo FROM `association` , ass_hash 
+                WHERE id_ASS=id AND HASH_ID <> :HASH_ID AND nom LIKE :nom");
+            $nomParam = '%' . $nom . '%';
+            $st->bindValue(':nom', $nomParam, PDO::PARAM_STR);
+        }else $st=Connexion::Connexion()->prepare(
+            "SELECT HASH_ID,nom,photo FROM `association` , ass_hash 
+            WHERE id_ASS=id AND HASH_ID <> :HASH_ID LIMIT 10"
+            );
+        $st->bindValue(':HASH_ID', $HASH, PDO::PARAM_STR);
+        $st->execute();
+        $res=$st->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    
+    public static function GetHash($id){
+        $conn=Connexion::Connexion();
+        $st=$conn->prepare("SELECT * FROM ass_hash WHERE id_ASS = ? ");
+        $st->bindParam(1,$id,PDO::PARAM_INT);
+        $st->execute();
+        return $st->fetch(PDO::FETCH_OBJ);
+    }
+
+    public static function Check_Hach($hash){
+        $conn=Connexion::Connexion();
+        $st=$conn->prepare("SELECT * FROM ass_hash WHERE HASH_ID = ? ");
+        $st->bindParam(1,$hash,PDO::PARAM_INT);
+        $st->execute();
+        return $st->fetch(PDO::FETCH_OBJ);
+    }
+
+    public static function Infoass_comment($HASH){
+        
+            //Récupérer les informations d'un utilisateur.
+            $st = Connexion::Connexion()->prepare(
+                "SELECT nom, HASH_ID,photo FROM association ass , ass_hash ah 
+                WHERE ass.id=ah.`id_ASS` and HASH_ID=?"
+            );
+            $st->bindParam(1, $HASH,PDO::PARAM_STR);
+            $st->execute();
+            $res=$st->fetch(PDO::FETCH_OBJ);
+            return $res;
+        
+    }
+
+    public static function get_convers($HASH_1){
+        $st = Connexion::Connexion()->prepare(
+            "SELECT c.id,ah.HASH_ID,nom,a.photo FROM conversations c,ass_hash ah ,association a
+            WHERE (c.HASH_ID1=ah.HASH_ID OR c.HASH_ID2=ah.HASH_ID ) AND ah.id_ASS=a.id
+            AND (c.HASH_ID1=? OR c.HASH_ID2=?)
+            AND ah.HASH_ID<>?
+            ");
+        $st->bindParam(1, $HASH_1, PDO::PARAM_STR);
+        $st->bindParam(2, $HASH_1, PDO::PARAM_STR);
+        $st->bindParam(3, $HASH_1, PDO::PARAM_STR);
+        $st->execute();
+        return $st->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public static function get_ass($HASH){
+        $st=Connexion::Connexion()->prepare(
+            "SELECT nom, photo ,ass.HASH_ID FROM ass_hash ass,association a
+            WHERE ass.id_ASS =a.id AND ass.HASH_ID=?
+            ");
+        $st->bindParam(1,$HASH,PDO::PARAM_STR);
+        $st->execute();
+        return $st->fetch(PDO::FETCH_OBJ);
+    }
+    
+}

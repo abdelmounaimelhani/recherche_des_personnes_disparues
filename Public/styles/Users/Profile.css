@@ -1,0 +1,186 @@
+
+body{
+    background-color: #f0f0f0;
+}
+.containerdiv{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+.div-ifo{
+    background-color: crimson;
+    height: 100%;
+    width: 300px;
+    border-right: 2px solid black;
+}
+.image-div{
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image{
+    width: 170px;
+    border-radius: 50%;
+}
+.info{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+.info>span{
+    margin: 3px;
+    text-align: center;
+    font-family: 'Poppins';
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.nav{
+    height: 300px;
+}
+.nav-ul{
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.nav-link{
+    all: initial;
+    margin-left: 15px;
+    cursor: pointer;
+    font-family: 'Poppins';
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    transition: .2s;
+}
+.nav-link:hover{
+    color: rgb(255, 255, 255);
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    letter-spacing: .5px;
+}
+
+
+.content{
+    width: calc(100% - 300px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-info{
+    animation-name: vis;
+    animation-duration: 1s;
+    width: 550px;
+    height: 400px;
+    position: relative;
+    top: 20px;
+    margin: auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 2px 1px #bbb8b8c2;
+    transition: 1s;
+    overflow: hidden;
+}
+.form-info>h2{
+    font-family: 'Poppins';
+}
+.visible{
+    height: 0px;
+    overflow: hidden;
+    padding-right:30px ;
+}
+@keyframes vis{
+    0%{height: 0px;}
+    100%{height: 400;}
+}
+.form-info>h3{
+    font-family: 'Poppins';
+}
+.form-group{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    align-items: center;
+}
+.form-group>label{
+    font-family: 'Alkatra';
+    width: 40%;
+}
+
+.form-input{
+    all: initial;
+    font-family: 'Poppins';
+    margin: 4px auto;
+    width: 50%;
+    height: 20px;
+    padding: 6px;
+    border-bottom: 1px solid rgb(148, 147, 147);
+    border-radius: 2px;
+    
+}
+.form-input:hover{
+    border-bottom: 1.5px solid rgb(0, 0, 0);
+}
+.form-input:focus{
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+.form-input::placeholder { 
+        
+    font-family: "Alkatra";
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+.form-btn{
+    all: initial;
+    font-family: 'Alkatra';
+    width: 100px;
+    height: 25px;
+    margin-left: 25px;
+    text-align: center;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.form-btn:hover{
+    border:1px solid rgb(62, 62, 62) ;
+    background-color: rgb(27, 27, 27);
+    color: #f0f0f0;
+}
+
+.btn-error{
+    animation-name: link;
+    animation-duration: 1s;
+}
+
+@keyframes link {
+    0%,100%{position: relative;left: 0;}
+    40%,60%,80%{position: relative;left: 5px;}
+    50%,70%,90%{position: relative;left: -5px;} 
+}
+
+.form-link{
+    all: initial;
+    position: relative;
+    left: 50%;
+    cursor: pointer;
+    font-family: 'Alkatra';
+    transition: 1s;
+}
+.form-link:hover{
+    border-bottom: 1px solid black;
+    border-top: 1px solid black ;
+}
