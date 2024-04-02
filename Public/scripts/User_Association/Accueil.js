@@ -6,7 +6,7 @@ let inputrch=document.getElementById('inputrch')
 let btnpost=document.getElementById('p_post')
 let users=document.getElementById('result')
 let msg=document.getElementById('msg')
-let diveloader=document.getElementsByClassName('diveloader')[0]
+let diveloader=document.getElementsByClassName('loader')[0]
 let userID=document.getElementById('userid').value
 let usernom=document.getElementById('usernom').value
 btnpost.style.cursor='pointer'
@@ -275,7 +275,7 @@ async function user(e,type) {
         href=`http://localhost/Project/?action=Profile_ass&id=${e.id}`
     }
     let div=document.createElement('div')
-    div.classList.add("card","bg-white","me-2","col-3")
+    div.classList.add("card","bg-white","me-2","col-2")
         let bodycard=document.createElement("div")
         bodycard.classList.add("d-flex","pe-2","pt-2","align-items-center")
             let divinfo=document.createElement("div")

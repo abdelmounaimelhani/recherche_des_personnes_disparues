@@ -44,33 +44,34 @@ class USER_CONTROLLER{
             include_once "App/Vue/Users/register.php";
     }
 
-    public static function Edituser()
+    public static function Profile()
     {
         $id=$_SESSION['user'];
         
         if (isset($_POST["Modifier"])) {
+
             if (
                 isset($_POST["nom"]) && isset($_POST["prenom"]) &&
                 isset($_POST["email"]) && isset($_POST["Genner"]) &&
-                isset($_POST["pass"])
+                isset($_POST["pass"]) && isset($_POST["Tele"]) && isset($_POST["Ville"])
             ) {
                 $nom=$_POST["nom"];$prenom=$_POST["prenom"];$email=$_POST["email"];
-                $genner=$_POST["Genner"];$pass=$_POST["pass"];
+                $genner=$_POST["Genner"];$pass=$_POST["pass"];$tele=$_POST["Tele"];$Ville=$_POST["Ville"];
                 if (
                     !empty($nom)&&!empty($prenom)&&!empty($email)&&
-                    !empty($genner)&&!empty($pass)
+                    !empty($genner)&&!empty($pass)&&!empty($tele)&&!empty($Ville)
                 ){
                     $hash=USER_MODEL::Verifierpass($id)->pass;
                     if (password_verify($pass,$hash)) {
-                        $res=USER_MODEL::Editeuser($nom,$prenom,$email,$genner,$id);
+                        $res=USER_MODEL::Editeuser($nom,$prenom,$email,$genner,$id,$tele,$Ville);
                         if ($res) {
                             echo "<script>alert('Les informations sont modifiées.')</script>";
                         }else{
                             echo "<script>alert('Échec de la modification des informations.')</script>";
                         }
-                    }else $error=2;
-                }else $error=1;
-            }else $error=1;
+                    }else echo "<script>alert('Le Mot de pass est incorect')</script>";
+                }else echo "<script>alert('Remplier Tout Les Donnes est incorect')</script>";
+            }else echo "<script>alert('Échec de la modification Les Donnes est incorect.')</script>";
         }
         
         if (isset($_POST["Change"])) {
@@ -86,14 +87,14 @@ class USER_CONTROLLER{
                             }else{
                                 echo "<script>alert('Échec de la modification de Mot de Pass.')</script>";
                             }
-                        }else $passerore=3;
-                    }else $passerore=2;
-                }else $passerore=1;
-            }else $passerore=1;
+                        }else echo "<script>alert('Le Neveu mot de pass incorect .')</script>";
+                    }else echo "<script>alert('Votre Mot de pass incorrect.')</script>";
+                }else echo "<script>alert('remplier tout les chompe.')</script>";
+            }else echo "<script>alert('remplier tout les chompe.')</script>";
         }
         
         $user=USER_MODEL::Infouser($id);
-        include_once "App/Vue/Users/Editinfo.php";
+        include_once "App/Vue/Users/Profile.php";
     }
 
     public static function Publication()
@@ -164,17 +165,7 @@ class USER_CONTROLLER{
             header('location:index.php?action=Pub');
         }
     }
-    
-    
-    
 
-
-    public static function Profile_user(){
-        if (isset($_GET["id"])) {
-
-            include_once "App/Vue/Users/ProfileUser.php";
-        }else header("http://localhost/Project/?action=note");
-    }
 
     
     public static function usersuive(){

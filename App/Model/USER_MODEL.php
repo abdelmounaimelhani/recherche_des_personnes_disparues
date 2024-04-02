@@ -76,14 +76,17 @@ class USER_MODEL{
         return $res;
     }
 
-    public static function Editeuser($nom, $prenom, $email, $gender, $id){
+    public static function Editeuser($nom, $prenom, $email, $gender, $id ,$tele,$Ville){
         //Modifier les informations d'un utilisateur.
-        $st = Connexion::Connexion()->prepare("UPDATE usertable SET nom = ? ,prenom = ? ,genner=? ,email =? WHERE id = ? ;");
+        $st = Connexion::Connexion()->prepare("UPDATE usertable SET nom = ? ,prenom = ? ,genner=? ,email =? ,tele=? ,Ville=? WHERE id = ? ;");
         $st->bindParam(1, $nom);
         $st->bindParam(2, $prenom);
         $st->bindParam(3, $gender);
         $st->bindParam(4, $email);
-        $st->bindParam(5, $id);
+        $st->bindParam(5, $tele);
+        $st->bindParam(6, $Ville);
+        $st->bindParam(7, $id);
+        
         $res = $st->execute();
         return $res;
     }

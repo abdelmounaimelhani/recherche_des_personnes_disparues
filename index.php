@@ -40,10 +40,9 @@ if (isset($_GET['action'])) {
     {
          
         switch ($_GET['action']) {
-            case 'Editinfo': return USER_CONTROLLER::Edituser();
             case 'Pub': return USER_CONTROLLER::Publication() ;
             case 'DeletPub': return USER_CONTROLLER::Delet_Pub() ;    
-            case 'Profile_user': return USER_CONTROLLER::Profile_user();
+            case 'Profile': return USER_CONTROLLER::Profile();
             case 'creat_desparu': return CONTROLLER::creat_desparu() ;
             case 'Disparues': return CONTROLLER::Get_disparus();
 
@@ -59,7 +58,6 @@ if (isset($_GET['action'])) {
             case 'edite_indiv':return ASSOCIATION_CONTROLLER::Edit_Info_Individus();
             case 'delet_indv':return ASSOCIATION_CONTROLLER::Delet_Individus();
             case 'info_indiv': return ASSOCIATION_CONTROLLER::Get_Info_Individus() ;
-            case 'Profile_user': return USER_CONTROLLER::Profile_user() ;
             case 'Individue': return CONTROLLER::Get_disparus();
             default: return include_once('App/Vue/404.php') ;
         }
