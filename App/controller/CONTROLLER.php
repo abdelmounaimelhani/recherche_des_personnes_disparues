@@ -282,11 +282,11 @@ class CONTROLLER
                     }else $error=4;
                         if ($error==0 ) {
                             if (isset($_SESSION['user'])) {
-                                USER_MODEL::Creat_disparu($Nom,$Prenom,$Naissance,$dentree,$Photo,$Villa,$_SESSION["HASH"],$genner);
+                                USER_MODEL::Creat_disparu($Nom,$Prenom,$dentree,$Naissance,$Photo,$Villa,$_SESSION["HASH"],$genner);
                                 header("location:http://localhost/Project/?action=Disparues");
                                 
                             }elseif(isset($_SESSION['ass'])){
-                                ASSOCIATION_MODEL::Creat_indiv($Nom,$Prenom,$Naissance,$dentree,$Photo,$Villa,$_SESSION["HASH"],$genner);
+                                ASSOCIATION_MODEL::Creat_indiv($Nom,$Prenom,$dentree,$Naissance,$Photo,$Villa,$_SESSION["HASH"],$genner);
                                 header("location:http://localhost/Project/?action=Individue");
                             }
                         }
@@ -303,12 +303,12 @@ class CONTROLLER
                 isset($_POST["Gennre"])&& isset($_POST["Daten"])
                 && isset($_POST["Ville"])&& isset($_POST["Dated"])
             ) {
-                $Nom = $_POST["Nom"];
-                $Prenom = $_POST["Prenom"];
-                $Gennre = $_POST["Gennre"];
-                $Daten = $_POST["Daten"];
-                $Ville = $_POST["Ville"];
-                $Dated = $_POST["Dated"];
+                $Nom = htmlspecialchars($_POST["Nom"]);
+                $Prenom = htmlspecialchars($_POST["Prenom"]); 
+                $Gennre = htmlspecialchars($_POST["Gennre"]) ; 
+                $Daten = htmlspecialchars($_POST["Daten"]);
+                $Ville = htmlspecialchars($_POST["Ville"]);
+                $Dated = htmlspecialchars($_POST["Dated"]);
                 $tablekey=[];
                 if(!empty($Nom))    $tablekey["nom"]=$Nom;
                 if(!empty($Prenom)) $tablekey["prenom"]=$Prenom;
@@ -316,7 +316,10 @@ class CONTROLLER
                 if(!empty($Daten))  $tablekey["date_N"]=$Daten;
                 if(!empty($Ville))  $tablekey["ville"]=$Ville;
                 if(!empty($Dated))  $tablekey["date_disparition"]=$Dated;
-                if(count($tablekey)>0) $data=USER_MODEL::Recherch_disparu($tablekey);
+                if(count($tablekey)>0) {
+                    if(isset($_SESSION["user"])) $data=USER_MODEL::Recherch_disparu($tablekey);
+                    elseif(isset($_SESSION["ass"])) $data=ASSOCIATION_MODEL::Recherch_disparu($tablekey);
+                }
                 
             }
         }

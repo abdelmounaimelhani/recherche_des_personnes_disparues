@@ -367,7 +367,7 @@ class USER_MODEL{
     {
         $type = "DIS";
         $conn = Connexion::Connexion();
-        $st = $conn->prepare("INSERT INTO disparu (`nom`, `prenom`, `date_entre`, `date_N`, `photo`, `ville`, `HASH`, `Gennre` , `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $st = $conn->prepare("INSERT INTO disparu (`nom`, `prenom`, `date_disparition`, `date_N`, `photo`, `ville`, `HASH`, `Gennre` , `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $st->bindParam(1, $nom);
         $st->bindParam(2, $prenom);
         $st->bindParam(3, $date_entre);
@@ -395,8 +395,8 @@ class USER_MODEL{
             from disparu d,ass_hash ah,association ass
             WHERE d.HASH=ah.HASH_ID AND ah.id_ASS=ass.id AND type='IND' AND ";
         foreach ($tablekey as $key => $value) {
-            if ($key == "date_disparition") $requte.=" d.date_entre > '$value' AND ";
-            elseif ($key == "date_N") $requte.=" d.date_N > '$value' AND ";
+            if ($key == "date_disparition") $requte.=" d.date_entre >= '$value' AND ";
+            elseif ($key == "date_N") $requte.=" d.date_N >= '$value' AND ";
             elseif ($key == "Gennre") $requte.=" d.Gennre = '$value' AND ";
             else $requte.="d.$key LIKE '%$value%' AND ";
         }

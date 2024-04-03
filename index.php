@@ -33,6 +33,8 @@ if (isset($_GET['action'])) {
             case 'get_info_conv': return CONTROLLER::get_info_conv();
             case 'get_nb_msg': return CONTROLLER::get_nb_msg();
             case 'get_dernier_msg': return CONTROLLER::get_dernier_msg();
+            case "Recherch_desparu": return CONTROLLER::Recherch_desparu();
+
             case 'test': return include_once ("./test.php");
         }
     }
@@ -45,7 +47,6 @@ if (isset($_GET['action'])) {
             case 'Profile': return USER_CONTROLLER::Profile();
             case 'creat_desparu': return CONTROLLER::creat_desparu() ;
             case 'Disparues': return CONTROLLER::Get_disparus();
-            case "Recherch_desparu": return CONTROLLER::Recherch_desparu();
             default: return include_once('App/Vue/404.php');
         }
     }

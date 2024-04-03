@@ -36,6 +36,17 @@
             <span class="text-white nav-link-text ms-1">les disparus</span>
           </a>
         </li>
+        <?php endif;if (isset($_SESSION['ass'])) : ?>
+            <li class="nav-item">
+          <a class="nav-link " href="?action=Individue">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-user-friends text-white text-sm opacity-10"></i>
+            </div>
+            <span class="text-white nav-link-text ms-1">L'individus</span>
+          </a>
+        </li>
+        
+        <?php endif;?>
         <li class="nav-item">
           <a class="nav-link " href="?action=Recherch_desparu">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -44,15 +55,6 @@
             <span class="text-white nav-link-text ms-1">Recherch desparu</span>
           </a>
         </li>
-
-        <?php endif;if (isset($_SESSION['ass'])) : ?>
-            <li class="nav-item">
-          <a class="nav-link " href="?action=Individue">
-            <span class="text-white nav-link-text ms-1">L'individus</span>
-          </a>
-        </li>
-        
-        <?php endif;?>
         <li class="nav-item">
           <a class="nav-link " href="?action=Messge">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

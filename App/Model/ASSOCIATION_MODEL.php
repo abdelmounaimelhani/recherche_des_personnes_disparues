@@ -204,5 +204,23 @@ class ASSOCIATION_MODEL
         $st->execute();
         return $st->fetch(PDO::FETCH_OBJ);
     }
+
+    public static function Recherch_disparu($tablekey){
+        $requte="SELECT d.* , concat(us.nom,' ',us.prenom) AS 'nomC' ,us.tele,us.email
+        from disparu d,usertable us,user_hash uh
+        WHERE d.HASH=uh.HASH_ID AND uh.`id-user`=us.id AND type='DIS' AND ";
+        foreach ($tablekey as $key => $value) {
+            if ($key == "date_disparition") $requte.=" d.date_disparition <= '$value' AND ";
+            elseif ($key == "date_N") $requte.=" d.date_N <= '$value' AND ";
+            elseif ($key == "Gennre") $requte.=" d.Gennre = '$value' AND ";
+            else $requte.="d.$key LIKE '%$value%' AND ";
+        }
+       
+        $requte=substr($requte,0,-5);
+        $st = Connexion::Connexion()->prepare($requte);
+        $st->execute();
+        $res = $st->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
     
 }
