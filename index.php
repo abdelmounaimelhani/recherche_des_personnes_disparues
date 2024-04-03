@@ -45,7 +45,7 @@ if (isset($_GET['action'])) {
             case 'Profile': return USER_CONTROLLER::Profile();
             case 'creat_desparu': return CONTROLLER::creat_desparu() ;
             case 'Disparues': return CONTROLLER::Get_disparus();
-
+            case "Recherch_desparu": return CONTROLLER::Recherch_desparu();
             default: return include_once('App/Vue/404.php');
         }
     }

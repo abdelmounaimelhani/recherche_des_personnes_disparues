@@ -295,4 +295,8 @@ class CONTROLLER
         }
         include_once "./App/Vue/User_Association/Creat_disparu.php";
     }
+
+    public static function Recherch_desparu() {
+        include_once "./App/Vue/User_Association/Recherch_disparu.php";
+    }
 }   
