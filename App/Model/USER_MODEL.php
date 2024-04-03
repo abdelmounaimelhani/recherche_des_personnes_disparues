@@ -391,18 +391,16 @@ class USER_MODEL{
     }
 
     public static function Recherch_disparu($tablekey){
-        $requte="SELECT * FROM disparu WHERE ";
+        $requte="SELECT d.* , ass.id,ass.nom AS 'assnom',ass.email,ass.tele,ass.ville,ass.adress
+            from disparu d,ass_hash ah,association ass
+            WHERE d.HASH=ah.HASH_ID AND ah.id_ASS=ass.id AND type='IND' AND ";
         foreach ($tablekey as $key => $value) {
-            if ($key == "date_disparition") {
-                $requte.="date_entre > $value AND ";
-            }elseif ($key == "date_N") {
-                $requte.="date_N > $value AND ";
-            }elseif ($key == "Gennre") {
-                $requte.="Gennre = '$value' AND ";
-            }else {
-                $requte.=$key." LIKE '%".$value."%' AND ";
-            }
+            if ($key == "date_disparition") $requte.=" d.date_entre > '$value' AND ";
+            elseif ($key == "date_N") $requte.=" d.date_N > '$value' AND ";
+            elseif ($key == "Gennre") $requte.=" d.Gennre = '$value' AND ";
+            else $requte.="d.$key LIKE '%$value%' AND ";
         }
+       
         $requte=substr($requte,0,-5);
         $st = Connexion::Connexion()->prepare($requte);
         $st->execute();

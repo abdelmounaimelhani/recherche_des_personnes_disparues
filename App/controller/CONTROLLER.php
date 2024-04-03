@@ -298,6 +298,7 @@ class CONTROLLER
 
     public static function Recherch_desparu() {
         if (isset($_POST["Rechercher"])) {
+            
             if (isset($_POST["Nom"])&& isset($_POST["Prenom"]) &&
                 isset($_POST["Gennre"])&& isset($_POST["Daten"])
                 && isset($_POST["Ville"])&& isset($_POST["Dated"])
@@ -315,11 +316,8 @@ class CONTROLLER
                 if(!empty($Daten))  $tablekey["date_N"]=$Daten;
                 if(!empty($Ville))  $tablekey["ville"]=$Ville;
                 if(!empty($Dated))  $tablekey["date_disparition"]=$Dated;
-
-                $data=USER_MODEL::Recherch_disparu($tablekey);
-                if ($data==null) {
-                    var_dump($data);
-                }
+                if(count($tablekey)>0) $data=USER_MODEL::Recherch_disparu($tablekey);
+                
             }
         }
         include_once "./App/Vue/User_Association/Recherch_disparu.php";

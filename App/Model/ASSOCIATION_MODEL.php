@@ -52,17 +52,17 @@ class ASSOCIATION_MODEL
     public static function Creat_indiv($nom, $prenom, $date_entre, $date_N, $photo, $ville, $HASH,$Gen)
     {
         $conn = Connexion::Connexion();
-        $st = $conn->prepare("INSERT INTO disparu (`nom`, `prenom`, `date_entre`, `date_N`, `photo`, `ville`, `HASH`, `Gennre`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
-        $type="IND";
-        $st->bindParam(1, $nom);
-        $st->bindParam(2, $prenom);
-        $st->bindParam(3, $date_entre);
-        $st->bindParam(4, $date_N);
-        $st->bindParam(5, $photo);
-        $st->bindParam(6, $ville);
-        $st->bindParam(7, $HASH);
-        $st->bindParam(8, $Gen);
-        $st->bindParam(9,  $type);
+        $st = $conn->prepare("INSERT INTO disparu (`nom`, `prenom`, `date_entre`, `date_N`, `photo`, `ville`, `HASH`, `Gennre`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?,'IND')");
+        
+        $st->bindParam(1, $nom ,PDO::PARAM_STR);
+        $st->bindParam(2, $prenom ,PDO::PARAM_STR);
+        $st->bindParam(3, $date_entre ,PDO::PARAM_STR);
+        $st->bindParam(4, $date_N ,PDO::PARAM_STR);
+        $st->bindParam(5, $photo ,PDO::PARAM_STR);
+        $st->bindParam(6, $ville ,PDO::PARAM_STR);
+        $st->bindParam(7, $HASH ,PDO::PARAM_STR);
+        $st->bindParam(8, $Gen ,PDO::PARAM_STR);
+        
         return $st->execute();
     }
     
