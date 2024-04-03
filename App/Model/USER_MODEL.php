@@ -389,4 +389,24 @@ class USER_MODEL{
         $res = $st->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
+
+    public static function Recherch_disparu($tablekey){
+        $requte="SELECT * FROM disparu WHERE ";
+        foreach ($tablekey as $key => $value) {
+            if ($key == "date_disparition") {
+                $requte.="date_entre > $value AND ";
+            }elseif ($key == "date_N") {
+                $requte.="date_N > $value AND ";
+            }elseif ($key == "Gennre") {
+                $requte.="Gennre = '$value' AND ";
+            }else {
+                $requte.=$key." LIKE '%".$value."%' AND ";
+            }
+        }
+        $requte=substr($requte,0,-5);
+        $st = Connexion::Connexion()->prepare($requte);
+        $st->execute();
+        $res = $st->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
 }

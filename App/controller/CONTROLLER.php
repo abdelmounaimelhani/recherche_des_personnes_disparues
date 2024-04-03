@@ -297,6 +297,31 @@ class CONTROLLER
     }
 
     public static function Recherch_desparu() {
+        if (isset($_POST["Rechercher"])) {
+            if (isset($_POST["Nom"])&& isset($_POST["Prenom"]) &&
+                isset($_POST["Gennre"])&& isset($_POST["Daten"])
+                && isset($_POST["Ville"])&& isset($_POST["Dated"])
+            ) {
+                $Nom = $_POST["Nom"];
+                $Prenom = $_POST["Prenom"];
+                $Gennre = $_POST["Gennre"];
+                $Daten = $_POST["Daten"];
+                $Ville = $_POST["Ville"];
+                $Dated = $_POST["Dated"];
+                $tablekey=[];
+                if(!empty($Nom))    $tablekey["nom"]=$Nom;
+                if(!empty($Prenom)) $tablekey["prenom"]=$Prenom;
+                if(!empty($Gennre)) $tablekey["Gennre"]=$Gennre;
+                if(!empty($Daten))  $tablekey["date_N"]=$Daten;
+                if(!empty($Ville))  $tablekey["ville"]=$Ville;
+                if(!empty($Dated))  $tablekey["date_disparition"]=$Dated;
+
+                $data=USER_MODEL::Recherch_disparu($tablekey);
+                if ($data==null) {
+                    var_dump($data);
+                }
+            }
+        }
         include_once "./App/Vue/User_Association/Recherch_disparu.php";
     }
 }   

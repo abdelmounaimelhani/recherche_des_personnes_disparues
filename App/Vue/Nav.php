@@ -12,6 +12,9 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="?action=Accueil">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-home text-white text-sm opacity-10"></i>
+            </div>
             <span class="text-white nav-link-text ms-1">Accueil</span>
           </a>
         </li>
@@ -19,12 +22,26 @@
         <?php if (isset($_SESSION['user'])) :?>
         <li class="nav-item">
           <a class="nav-link " href="?action=Pub">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-list text-white text-sm opacity-10"></i>
+            </div>
             <span class="text-white nav-link-text ms-1"> Mes Publications</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="?action=Disparues">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-user-friends text-white text-sm opacity-10"></i>
+            </div>
             <span class="text-white nav-link-text ms-1">les disparus</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="?action=Recherch_desparu">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-search text-white text-sm opacity-10"></i>
+            </div>
+            <span class="text-white nav-link-text ms-1">Recherch desparu</span>
           </a>
         </li>
 
@@ -38,6 +55,9 @@
         <?php endif;?>
         <li class="nav-item">
           <a class="nav-link " href="?action=Messge">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-envelope text-white text-sm opacity-10"></i>
+            </div>
             <span class="text-white nav-link-text ms-1">Missages</span>
           </a>
         </li>
