@@ -57,13 +57,14 @@
     </table>
   </form>
 </div>
+<?php if(isset($data)) { ?>
 <div class="row">
   <div class="col-12 mt-4">
     <div class="card">
       <div class="card-header pb-0 px-3">
         <h6 class="mb-0">Résultats de la recherche pour personnes disparues</h6>
       </div>
-      <?php if(isset($data)) { 
+      <?php
       if(count($data)>0) {
       foreach ($data as $key => $value) {?>
       <div class="card-body pt-4 p-3">
