@@ -60,6 +60,8 @@ if (isset($_GET['action'])) {
             case 'delet_indv':return ASSOCIATION_CONTROLLER::Delet_Individus();
             case 'info_indiv': return ASSOCIATION_CONTROLLER::Get_Info_Individus() ;
             case 'Individue': return CONTROLLER::Get_disparus();
+            case 'Profile': return ASSOCIATION_CONTROLLER::Profile();
+
             default: return include_once('App/Vue/404.php') ;
         }
     }else return CONTROLLER::Login() ;

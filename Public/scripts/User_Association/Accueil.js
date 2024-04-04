@@ -269,13 +269,13 @@ async function user(e,type) {
     let nom=href=""
     if (type=="user") {
         nom=e.nom + " " + e.prenom
-        href=`http://localhost/Project/?action=Profile_user&ID=${e.HASH_ID}`
+        href=`http://localhost/Project/?action=Profile&hash=${e.HASH_ID}`
     }else if(type=="ass"){
         nom=e.nom
-        href=`http://localhost/Project/?action=Profile_ass&id=${e.id}`
+        href=`http://localhost/Project/?action=Profile&hash=${e.HASH_ID}`
     }
     let div=document.createElement('div')
-    div.classList.add("card","bg-white","me-2","col-2")
+    div.classList.add("card","bg-white","me-2","col-3")
         let bodycard=document.createElement("div")
         bodycard.classList.add("d-flex","pe-2","pt-2","align-items-center")
             let divinfo=document.createElement("div")

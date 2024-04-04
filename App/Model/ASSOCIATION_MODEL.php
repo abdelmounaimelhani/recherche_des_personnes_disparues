@@ -22,6 +22,27 @@ class ASSOCIATION_MODEL
         return $res;
         
     }
+    public static function Editeass($nom,$email,$Adress,$tele,$Ville){
+        //Modifier les informations d'un utilisateur.
+        $st = Connexion::Connexion()->prepare("UPDATE association SET nom = ? ,adress=? ,email =? ,tele=? ,Ville=? WHERE id = ? ;");
+        $st->bindParam(1, $nom);
+        $st->bindParam(2, $Adress);
+        $st->bindParam(3, $email);
+        $st->bindParam(4, $tele);
+        $st->bindParam(5, $Ville);
+        $st->bindParam(6, $_SESSION["ass"]);
+        
+        $res = $st->execute();
+        return $res;
+    }
+
+    public static function UpdateassPassword($pass,$id){
+        $st = Connexion::Connexion()->prepare("UPDATE association SET pass = ? WHERE id = ? ;");
+        $st->bindParam(1, $pass);
+        $st->bindParam(2, $id);
+        $res = $st->execute();
+        return $res;
+    }
 
     public static function Info_ass($id){
         $st = Connexion::Connexion()->prepare("SELECT * FROM association WHERE id=?");
@@ -197,7 +218,7 @@ class ASSOCIATION_MODEL
 
     public static function get_ass($HASH){
         $st=Connexion::Connexion()->prepare(
-            "SELECT nom, photo ,ass.HASH_ID FROM ass_hash ass,association a
+            "SELECT nom, photo ,ass.HASH_ID,adress,email,tele,ville FROM ass_hash ass,association a
             WHERE ass.id_ASS =a.id AND ass.HASH_ID=?
             ");
         $st->bindParam(1,$HASH,PDO::PARAM_STR);

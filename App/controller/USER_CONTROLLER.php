@@ -78,8 +78,8 @@ class USER_CONTROLLER{
             if (isset($_POST["pass"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])){
                 $pass=$_POST["pass"];$pass1=$_POST["pass1"];$pass2=$_POST["pass2"];
                 if (!empty($pass)&&!empty($pass1)&&!empty($pass2)){
-                    $hash=USER_MODEL::Verifierpass($id)->pass;
-                    if (password_verify($pass,$hash)) {
+                    $passhash=USER_MODEL::Verifierpass($id)->pass;
+                    if (password_verify($pass,$passhash)) {
                         if ($pass1==$pass2) {
                            $respass=USER_MODEL::UpdateUserPassword(password_hash($pass1,PASSWORD_DEFAULT),$id);
                             if ($respass) {

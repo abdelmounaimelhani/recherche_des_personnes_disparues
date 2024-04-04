@@ -40,57 +40,6 @@ class ASSOCIATION_CONTROLLER
         }else
             include_once "App/Vue/Association/register_ass.php";
     }
-
-    public static function Edit_Association()
-    {
-        $id=$_SESSION['user'];
-        
-        if (isset($_POST["Modifier"])) {
-            if (
-                isset($_POST["nom"]) && isset($_POST["prenom"]) &&
-                isset($_POST["email"]) && isset($_POST["Genner"]) &&
-                isset($_POST["pass"])
-            ) {
-                $nom=$_POST["nom"];$prenom=$_POST["prenom"];$email=$_POST["email"];
-                $genner=$_POST["Genner"];$pass=$_POST["pass"];
-                if (
-                    !empty($nom)&&!empty($prenom)&&!empty($email)&&
-                    !empty($genner)&&!empty($pass)
-                ){
-                    $hash=USER_MODEL::Verifierpass($id)->pass;
-                    if (password_verify($pass,$hash)) {
-                        $res=USER_MODEL::Editeuser($nom,$prenom,$email,$genner,$id);
-                        if ($res) {
-                            echo "<script>alert('Les informations sont modifiées.')</script>";
-                        }else{
-                            echo "<script>alert('Échec de la modification des informations.')</script>";
-                        }
-                    }else $error=2;
-                }else $error=1;
-            }else $error=1;
-        }
-        
-        if (isset($_POST["Change"])) {
-            if (isset($_POST["pass"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])){
-                $pass=$_POST["pass"];$pass1=$_POST["pass1"];$pass2=$_POST["pass2"];
-                if (!empty($pass)&&!empty($pass1)&&!empty($pass2)){
-                    $hash=USER_MODEL::Verifierpass($id)->pass;
-                    if (password_verify($pass,$hash)) {
-                        if ($pass1==$pass2) {
-                           $respass=USER_MODEL::UpdateUserPassword(password_hash($pass1,PASSWORD_DEFAULT),$id);
-                            if ($respass) {
-                                echo "<script>alert('Le mot de pass est modifiées.')</script>";
-                            }else{
-                                echo "<script>alert('Échec de la modification de Mot de Pass.')</script>";
-                            }
-                        }else $passerore=3;
-                    }else $passerore=2;
-                }else $passerore=1;
-            }else $passerore=1;
-        }        
-        $user=USER_MODEL::Infouser($id);
-        include_once "App/Vue/Users/Editinfo.php";
-    }
     //les functions des Individus
        
     public static function Get_Info_Individus()
@@ -147,5 +96,61 @@ class ASSOCIATION_CONTROLLER
                 }else echo json_encode(["code"=>1]);
             }else echo json_encode(["code"=>1]);
         }else header("location:http://localhost/Project/?action=Accueil");
+    }
+
+    public static function Profile()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["hash"])) {
+            $ass=ASSOCIATION_MODEL::get_ass($_GET["hash"]);
+        }elseif(isset($_SESSION["ass"]) ){
+            $id=$_SESSION['ass'];
+            
+            if (isset($_POST["Modifier"])) {
+    
+                if (
+                    isset($_POST["Nom"]) && isset($_POST["email"]) && isset($_POST["Adress"]) &&
+                    isset($_POST["pass"]) && isset($_POST["Tele"]) && isset($_POST["Ville"])
+                ) {
+                    $nom=$_POST["Nom"];$email=$_POST["email"];$Adress=$_POST["Adress"];
+                    $pass=$_POST["pass"];$tele=$_POST["Tele"];$Ville=$_POST["Ville"];
+                    if (
+                        !empty($nom)&&!empty($email)&&!empty($Adress)
+                        &&!empty($pass)&&!empty($tele)&&!empty($Ville)
+                    ){
+                        $hash=ASSOCIATION_MODEL::Info_ass($id)->pass;
+                        if (password_verify($pass,$hash)) {
+                            $res=ASSOCIATION_MODEL::Editeass($nom,$email,$Adress,$tele,$Ville);
+                            if ($res) {
+                                echo "<script>alert('Les informations sont modifiées.')</script>";
+                            }else{
+                                echo "<script>alert('Échec de la modification des informations.')</script>";
+                            }
+                        }else echo "<script>alert('Le Mot de pass est incorect')</script>";
+                    }else echo "<script>alert('Remplier Tout Les Donnes est incorect')</script>";
+                }else echo "<script>alert('Échec de la modification Les Donnes est incorect.')</script>";
+            }
+            
+            if (isset($_POST["Change"])) {
+                if (isset($_POST["pass"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])){
+                    $pass=$_POST["pass"];$pass1=$_POST["pass1"];$pass2=$_POST["pass2"];
+                    if (!empty($pass)&&!empty($pass1)&&!empty($pass2)){
+                        $hash=ASSOCIATION_MODEL::Info_ass($id)->pass;
+                        if (password_verify($pass,$hash)) {
+                            if ($pass1==$pass2) {
+                               $respass=ASSOCIATION_MODEL::UpdateassPassword(password_hash($pass1,PASSWORD_DEFAULT),$id);
+                                if ($respass) {
+                                    echo "<script>alert('Le mot de pass est modifiées.')</script>";
+                                }else{
+                                    echo "<script>alert('Échec de la modification de Mot de Pass.')</script>";
+                                }
+                            }else echo "<script>alert('Le Neveu mot de pass incorect .')</script>";
+                        }else echo "<script>alert('Votre Mot de pass incorrect.')</script>";
+                    }else echo "<script>alert('remplier tout les chompe.')</script>";
+                }else echo "<script>alert('remplier tout les chompe.')</script>";
+            }
+            $ass=ASSOCIATION_MODEL::Info_ass($id);
+        }
+            
+        include_once "App\Vue\Association\Profile.php";
     }
 }
