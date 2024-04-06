@@ -68,11 +68,20 @@ function creatchate(user) {
 
         let divform=document.getElementById("form_message")
         divform.innerHTML=""
+        let form=document.createElement("form")
+        let divinpt=document.createElement('div')
+        divinpt.classList.add("col-10")
         let input=document.createElement("input")
-        let icon=document.createElement("img")
-        icon.classList.add("icon_envoi")
-        icon.src="http://localhost/Project/Public/imgs/envoyer.png"
-        icon.addEventListener("click",()=>{
+        input.classList.add("form-control")
+        divinpt.appendChild(input)
+        let button=document.createElement("img")
+        button.classList.add("btn")
+        let i=document.createElement("i")
+        i.classList.add("fas","fa-paper-plane")
+        button.appendChild(i)
+        form.append(divinpt,button)
+        form.addEventListener("click",(e)=>{
+            e.preventDefault()
             if (input.value.trim() !== "") {
                 let Data=new FormData()
                 Data.append('Message',input.value)
@@ -97,8 +106,8 @@ function creatchate(user) {
                 })
             }
         })
-        divform.appendChild(input)
-        divform.appendChild(icon)
+        divform.appendChild(form)
+        
 
         fetch(`http://localhost/Project/?action=get_Message&id=${user.id}`)
         .then(response=>response.json())
@@ -157,10 +166,10 @@ let creatuser=(user)=>{
     let span=document.createElement('span')
     let divN=document.createElement('div')
     let NBMSG=0
-    div.classList.add('userinfo')
-    img.classList.add('userimg')
-    span.classList.add('username')
-    divN.classList.add('divN')
+    div.classList.add('d-flex','cursor-pointer','align-items-center','p-1')
+    img.classList.add('avatar','me-2')
+    span.classList.add('d-block','col-9')
+    divN.classList.add('bg-info','opacity-5','text-center','col-1','rounded-circle')
     img.src=user.photo
     span.innerText=user.nom
 

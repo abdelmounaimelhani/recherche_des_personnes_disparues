@@ -1,34 +1,68 @@
-<?php ob_start();
-    include_once("App/Vue/User_Association/nav.php");
-?>
+<?php ob_start();?>
+<style>
+    .message1{
+    min-width: 120px;
+    max-width: max-content ;
+    padding: 6px;
+    min-height: 50px;
+    text-wrap: wrap;
+    border-radius: 20px 20px 20px 0;
+    background-color: rgb(155, 201, 255);
+    margin: 3px;
+}
+
+.message1 span{
+    margin: 2px;
+    font-size: 12px;
+}
+.message2>div>span{
+
+    margin: 2px;
+    font-size: 12px;
+}
+
+.message2{
+    display: flex;
+    justify-content: end;
+}
+.message2>div{
+    min-width: 120px;
+    max-width: max-content ;
+    padding: 6px;
+    min-height: 50px;
+    text-wrap: wrap;
+    border-radius: 20px 20px 0 20px;
+    background-color: rgb(119, 255, 160);
+    margin: 3px;
+}
+</style>
 <input type="hidden" id="HASH" value="<?=$_SESSION["HASH"]?>">
 <input type="hidden" id="USERHASH" value="">
-<div class="containerdiv">
-    <div class="Discussions" id="Discussions"></div>
-    <div class="chat" id="chat">
-        <div class="diver"><span id="mesg_err">taper sur un conversation</span></div>
-        <div class="infochat" id="infochat">
-            <img id="userimg" src="" alt="">
-            <a id="userlink" href=""><span id="username"></span></a>
+<div class="row">
+    <div class="min-vh-80 max-height-vh-80 d-flex justify-content-between align-self-stretch">
+        <div class="col-4 border-radius-top-start border-radius-bottom-start bg-light" id="Discussions">
         </div>
-        <div class="Messages" id="Messages"></div>
-        <div class="form_message" id="form_message">
 
+        <div class="col-8 border-radius-top-end border-radius-bottom-end bg-white" id="chat">
+            <div class="diver"><span id="mesg_err">taper sur un conversation</span></div>
+            <div class="d-flex align-items-center p-1 bg-dark d-none" id="infochat">
+                <img id="userimg" class="avatar m-2" src="" alt="">
+                <a id="userlink" href=""><span id="username" class="text-white link-info"></span></a>
+            </div>
+            <div class="height-400 mt-3 overflow-auto" id="Messages">
+                
+            </div>
+            <div class="mt-2" id="form_message">
+                
+            </div>
+            
         </div>
-        
     </div>
 </div>
+<script src='Public/scripts/User_Association/Message.js'></script>
 <?php
     $content = ob_get_clean();
-    $styles = <<<styles
-        <link rel='stylesheet' href='Public/styles/User_Association/header.css'>
-        <link rel='stylesheet' href='Public/styles/User_Association/Message.css'>
-        styles;
-    $scripts = <<<script
-    <script src='Public/scripts/User_Association/jquery-3.7.1.js'></script>
-    <script src='Public/scripts/User_Association/header.js'></script>
-    <script src='Public/scripts/User_Association/Message.js'></script>
-    script;
+   
     $title = 'Message';
     
     include_once 'App/Vue/Mastre.php'; 

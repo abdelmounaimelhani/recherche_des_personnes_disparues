@@ -1,4 +1,13 @@
-<?php ob_start();?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='Public/styles/Users/register.css'>
+    <title>Document</title>
+</head>
+<body>
 <div class="containerdiv">
     <div class="bg_img"></div> 
     <form id="form_register" action="" method="post" class="form-register">
@@ -46,10 +55,7 @@
         </div>
     </form>
 </div>
-<?php 
-    $content = ob_get_clean();
-    $styles = "<link rel='stylesheet' href='Public/styles/Users/register.css'>";
-    $scripts = "<script src='Public/scripts/Users/register.js'></script>";
-    $title = 'inscription';
-    include_once 'App/Vue/Mastre.php'; 
-?>
+<script src='Public/scripts/Users/register.js'></script>
+</body>
+</html>
+
