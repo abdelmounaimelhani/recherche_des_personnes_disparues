@@ -42,13 +42,13 @@
     <div class="min-vh-80 max-height-vh-80 d-flex justify-content-between align-self-stretch">
         <div class="col-4 border-radius-top-start border-radius-bottom-start bg-light" id="Discussions">
         </div>
-
+ 
         <div class="col-8 border-radius-top-end border-radius-bottom-end bg-white" id="chat">
-            <div class="diver"><span id="mesg_err">taper sur un conversation</span></div>
             <div class="d-flex align-items-center p-1 bg-dark d-none" id="infochat">
-                <img id="userimg" class="avatar m-2" src="" alt="">
+                <img id="userimg" class="avatar m-2">
                 <a id="userlink" href=""><span id="username" class="text-white link-info"></span></a>
             </div>
+            <div class="diver text-center col-7 position-absolute mt-10"><span id="mesg_err" class="">taper sur un conversation</span></div>
             <div class="height-400 mt-3 overflow-auto" id="Messages">
                 
             </div>

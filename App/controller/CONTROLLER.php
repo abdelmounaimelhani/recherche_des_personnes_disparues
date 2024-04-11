@@ -162,20 +162,17 @@ class CONTROLLER
         }
     }
 
-    public static function get_info_conv(){
+    public static function get_info_user(){
         if ($_SERVER['REQUEST_METHOD']=="POST") {
             if (isset($_POST["HASH"])) {
-                $res = USER_MODEL::get_user($_POST["HASH"]);
+                $res = USER_MODEL::get_info_user($_POST["HASH"]);
                 if ((bool) $res) {
-                    $res["id"]=USER_MODEL::get_id_conver($_POST["HASH"],$_SESSION["HASH"]);
+                    $idconv=USER_MODEL::get_id_conver($_POST["HASH"],$_SESSION['HASH']);
+                    if ((bool) $idconv) {
+                        $res["id"]= $idconv->id;
+                    }
                     echo json_encode(["res"=>$res]);
-                }else {
-                    $res["id"]=USER_MODEL::get_id_conver($_POST["HASH"],$_SESSION["HASH"]);
-                    $res = ASSOCIATION_MODEL::get_ass($_POST["HASH"]);
-                    if ((bool) $res) {
-                        echo json_encode(["res"=>$res]);
-                    }else echo json_encode(["res"=>1]);
-                }
+                }else echo json_encode(["res"=>1]);
             }
         }
     }

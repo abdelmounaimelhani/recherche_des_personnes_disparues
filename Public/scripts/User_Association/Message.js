@@ -7,6 +7,11 @@ let mesg_err=document.getElementById('mesg_err')
 let diver=document.querySelector('.diver')
 let clic=0
 let users={res:[[],[]]}
+let divinfo=document.getElementById('infochat')
+let imgu=document.getElementById("userimg")
+let linku=document.getElementById("userlink")
+let usern=document.getElementById("username")
+
 
 
 
@@ -57,25 +62,18 @@ function creatchate(user) {
         Messages.innerHTML=""
         USERHASH.value=user.HASH_ID
         let nbMs=0
-        let div=document.getElementById('infochat')
-        let img=document.getElementById('userimg')
-        let a=document.getElementById('userlink')
-        let span=document.getElementById('username')
-        div.style.display='flex'
-        a.href=user.HASH_ID
-        img.src=user.photo
-        span.innerHTML=user.nom
-
+ 
         let divform=document.getElementById("form_message")
         divform.innerHTML=""
         let form=document.createElement("form")
+        form.classList.add("d-flex")
         let divinpt=document.createElement('div')
         divinpt.classList.add("col-10")
         let input=document.createElement("input")
         input.classList.add("form-control")
         divinpt.appendChild(input)
-        let button=document.createElement("img")
-        button.classList.add("btn")
+        let button=document.createElement("button")
+        button.classList.add("btn","ms-2")
         let i=document.createElement("i")
         i.classList.add("fas","fa-paper-plane")
         button.appendChild(i)
@@ -107,7 +105,6 @@ function creatchate(user) {
             }
         })
         divform.appendChild(form)
-        
 
         fetch(`http://localhost/Project/?action=get_Message&id=${user.id}`)
         .then(response=>response.json())
@@ -161,6 +158,7 @@ function creatchate(user) {
 }
 
 let creatuser=(user)=>{
+    
     let div=document.createElement('div')
     let img=document.createElement('img')
     let span=document.createElement('span')
@@ -172,7 +170,7 @@ let creatuser=(user)=>{
     divN.classList.add('bg-info','opacity-5','text-center','col-1','rounded-circle')
     img.src=user.photo
     span.innerText=user.nom
-
+    console.log(user);
     div.appendChild(img)
     div.appendChild(span)
     
@@ -181,8 +179,12 @@ let creatuser=(user)=>{
     fetch("http://localhost/Project/?action=get_nb_msg",{method:"POST",body:idc})
     .then(response=>response.json())
     .then(data=>{NBMSG=data.res.nbmsg})
-    console.log(user)
+    
     div.addEventListener("click",()=>{
+        divinfo.classList.remove('d-none')
+        imgu.src=user.photo
+        linku.href=`http://localhost/Project/?action=Profile&hash=${user.HASH_ID}`
+        usern.innerText=user.nom
         fetch("http://localhost/Project/?action=get_nb_msg",{method:"POST",body:idc})
         .then(response=>response.json())
         .then(data=>{NBMSG=data.res.nbmsg})
@@ -198,7 +200,6 @@ let creatuser=(user)=>{
             .then(response=>response.json())
             .then(data=>{
                 nnbm=data.res.nbmsg; 
-                
                 if (nnbm>NBMSG) {
                     divN.style.display='block'
                     divN.innerHTML=nnbm-NBMSG
@@ -242,15 +243,19 @@ if (params.has('id')) {
     const id_HASH=params.get('id')
     const data=new FormData()
     data.append("HASH",id_HASH)
-    fetch("http://localhost/Project/?action=get_info_conv",{
+    fetch("http://localhost/Project/?action=get_info_user",{
         method:"POST",
         body:data
     })
     .then(response=>response.json())
     .then(data=>{
+        console.log(data);
         if (data.res!=1) {
-            
             creatchate(data.res)
+            divinfo.classList.remove('d-none')
+            imgu.src=data.res.photo
+            linku.href=`http://localhost/Project/?action=Profile&hash=${data.res.HASH_ID}`
+            usern.innerText=data.res.nom
         }
     })
     //

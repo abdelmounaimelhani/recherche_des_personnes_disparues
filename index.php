@@ -30,7 +30,7 @@ if (isset($_GET['action'])) {
             case 'getDiscussions': return CONTROLLER::getDiscussions();
             case 'get_Message': return CONTROLLER::get_Message();
             case 'get_suive': return CONTROLLER::get_suive();
-            case 'get_info_conv': return CONTROLLER::get_info_conv();
+            case 'get_info_user' : return CONTROLLER::get_info_user();
             case 'get_nb_msg': return CONTROLLER::get_nb_msg();
             case 'get_dernier_msg': return CONTROLLER::get_dernier_msg();
             case "Recherch_desparu": return CONTROLLER::Recherch_desparu();

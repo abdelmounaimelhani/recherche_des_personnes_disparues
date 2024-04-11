@@ -229,6 +229,30 @@ class USER_MODEL{
         $res = $st->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
+
+    public static function get_info_user($hash){
+        $st = Connexion::Connexion()->prepare(
+            "SELECT uh.HASH_ID,CONCAT(us.nom,' ',us.prenom) AS 'nom',us.photo 
+            FROM user_hash uh,usertable us
+            WHERE uh.`id-user`=us.id AND uh.HASH_ID = ? ");
+        $st->bindParam(1,$hash);
+        $st->execute();
+        $res = $st->fetch(PDO::FETCH_OBJ);
+        if((bool) $res){
+            return $res;
+        }else{
+            $st = Connexion::Connexion()->prepare(
+                "SELECT ah.HASH_ID,ass.nom,ass.photo
+                FROM ass_hash ah,association ass
+                WHERE ah.id_ASS=ass.id AND ah.HASH_ID = ? ");
+            $st->bindParam(1,$hash);
+            $st->execute();
+            $res = $st->fetch(PDO::FETCH_OBJ);
+            if((bool) $res){
+                return $res;
+            }else return false;
+        }
+    }
     
     public static function get_suive($hash){
         $st = Connexion::Connexion()->prepare(
@@ -282,7 +306,7 @@ class USER_MODEL{
             ");
         $st->bindParam(':HASH_1', $HASH_1, PDO::PARAM_STR);
         $st->bindParam(':HASH_2', $HASH_2, PDO::PARAM_STR);
-        $st->execute();;
+        $st->execute();
         return $st->fetch(PDO::FETCH_OBJ);
     }
 
