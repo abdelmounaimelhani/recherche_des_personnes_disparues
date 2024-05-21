@@ -58,10 +58,10 @@ class USER_MODEL{
         return $res;
     } 
 
-    public static function Infouser($id){
+    public static function Infouser($hash){
         //Récupérer les informations d'un utilisateur.
-        $st = Connexion::Connexion()->prepare("SELECT * FROM userTable WHERE id=?");
-        $st->bindParam(1, $id,PDO::PARAM_STR);
+        $st = Connexion::Connexion()->prepare("SELECT * FROM userTable u,user_hash uh WHERE u.id=uh.`id-user` AND uh.HASH_ID=?");
+        $st->bindParam(1, $hash,PDO::PARAM_STR);
         $st->execute();
         $res=$st->fetch(PDO::FETCH_OBJ);
         return $res;

@@ -119,7 +119,7 @@ form_register.addEventListener('submit',(e)=>{
             setTimeout(()=>{
                 btn.className='form-btn'
             },500)
-    }else{
+    }else{ 
         disabledtrue();
         const formData = new FormData();
         formData.append('nom', nom.value);

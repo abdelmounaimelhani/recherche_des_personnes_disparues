@@ -46,55 +46,65 @@ class USER_CONTROLLER{
 
     public static function Profile()
     {
-        $id=$_SESSION['user'];
         
-        if (isset($_POST["Modifier"])) {
-
-            if (
-                isset($_POST["nom"]) && isset($_POST["prenom"]) &&
-                isset($_POST["email"]) && isset($_POST["Genner"]) &&
-                isset($_POST["pass"]) && isset($_POST["Tele"]) && isset($_POST["Ville"])
-            ) {
-                $nom=$_POST["nom"];$prenom=$_POST["prenom"];$email=$_POST["email"];
-                $genner=$_POST["Genner"];$pass=$_POST["pass"];$tele=$_POST["Tele"];$Ville=$_POST["Ville"];
+        if (isset($_GET['hash'])) {
+            $id=$_GET['hash'];
+            $user=USER_MODEL::Infouser($id);
+        }else{
+            $id=$_SESSION['HASH'];
+            $user=USER_MODEL::Infouser($id);
+            if (isset($_POST["Modifier"])) {
+    
                 if (
-                    !empty($nom)&&!empty($prenom)&&!empty($email)&&
-                    !empty($genner)&&!empty($pass)&&!empty($tele)&&!empty($Ville)
-                ){
-                    $hash=USER_MODEL::Verifierpass($id)->pass;
-                    if (password_verify($pass,$hash)) {
-                        $res=USER_MODEL::Editeuser($nom,$prenom,$email,$genner,$id,$tele,$Ville);
-                        if ($res) {
-                            echo "<script>alert('Les informations sont modifiées.')</script>";
-                        }else{
-                            echo "<script>alert('Échec de la modification des informations.')</script>";
-                        }
-                    }else echo "<script>alert('Le Mot de pass est incorect')</script>";
-                }else echo "<script>alert('Remplier Tout Les Donnes est incorect')</script>";
-            }else echo "<script>alert('Échec de la modification Les Donnes est incorect.')</script>";
+                    isset($_POST["nom"]) && isset($_POST["prenom"]) &&
+                    isset($_POST["email"]) && isset($_POST["Genner"]) &&
+                    isset($_POST["pass"]) && isset($_POST["Tele"]) && isset($_POST["Ville"])
+                ) {
+                    $nom=$_POST["nom"];$prenom=$_POST["prenom"];$email=$_POST["email"];
+                    $genner=$_POST["Genner"];$pass=$_POST["pass"];$tele=$_POST["Tele"];$Ville=$_POST["Ville"];
+                    if (
+                        !empty($nom)&&!empty($prenom)&&!empty($email)&&
+                        !empty($genner)&&!empty($pass)&&!empty($tele)&&!empty($Ville)
+                    ){
+                        $hash=USER_MODEL::Verifierpass($user->id)->pass;
+                        if (password_verify($pass,$hash)) {
+                            $res=USER_MODEL::Editeuser($nom,$prenom,$email,$genner,$user->id,$tele,$Ville);
+                            $user=USER_MODEL::Infouser($id);
+                            if ($res) {
+                                echo "<script>alert('Les informations sont modifiées.')</script>";
+                            }else{
+                                echo "<script>alert('Échec de la modification des informations.')</script>";
+                            }
+                        }else echo "<script>alert('Le Mot de pass est incorect')</script>";
+                    }else echo "<script>alert('Remplier Tout Les Donnes est incorect')</script>";
+                }else echo "<script>alert('Échec de la modification Les Donnes est incorect.')</script>";
+            }
+
+            if (isset($_POST["Change"])) {
+                if (isset($_POST["pass"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])){
+                    $pass=$_POST["pass"];$pass1=$_POST["pass1"];$pass2=$_POST["pass2"];
+                    if (!empty($pass)&&!empty($pass1)&&!empty($pass2)){
+                        $passhash=USER_MODEL::Verifierpass($id)->pass;
+                        if (password_verify($pass,$passhash)) {
+                            if ($pass1==$pass2) {
+                               $respass=USER_MODEL::UpdateUserPassword(password_hash($pass1,PASSWORD_DEFAULT),$id);
+                                if ($respass) {
+                                    echo "<script>alert('Le mot de pass est modifiées.')</script>";
+                                }else{
+                                    echo "<script>alert('Échec de la modification de Mot de Pass.')</script>";
+                                }
+                            }else echo "<script>alert('Le Neveu mot de pass incorect .')</script>";
+                        }else echo "<script>alert('Votre Mot de pass incorrect.')</script>";
+                    }else echo "<script>alert('remplier tout les chompe.')</script>";
+                }else echo "<script>alert('remplier tout les chompe.')</script>";
+            }
         }
         
-        if (isset($_POST["Change"])) {
-            if (isset($_POST["pass"]) && isset($_POST["pass1"]) && isset($_POST["pass2"])){
-                $pass=$_POST["pass"];$pass1=$_POST["pass1"];$pass2=$_POST["pass2"];
-                if (!empty($pass)&&!empty($pass1)&&!empty($pass2)){
-                    $passhash=USER_MODEL::Verifierpass($id)->pass;
-                    if (password_verify($pass,$passhash)) {
-                        if ($pass1==$pass2) {
-                           $respass=USER_MODEL::UpdateUserPassword(password_hash($pass1,PASSWORD_DEFAULT),$id);
-                            if ($respass) {
-                                echo "<script>alert('Le mot de pass est modifiées.')</script>";
-                            }else{
-                                echo "<script>alert('Échec de la modification de Mot de Pass.')</script>";
-                            }
-                        }else echo "<script>alert('Le Neveu mot de pass incorect .')</script>";
-                    }else echo "<script>alert('Votre Mot de pass incorrect.')</script>";
-                }else echo "<script>alert('remplier tout les chompe.')</script>";
-            }else echo "<script>alert('remplier tout les chompe.')</script>";
-        }
         
         $user=USER_MODEL::Infouser($id);
-        include_once "App/Vue/Users/Profile.php";
+        if ((bool) $user) {
+            include_once "App/Vue/Users/Profile.php";
+        }
     }
 
     public static function Publication()
@@ -143,7 +153,7 @@ class USER_CONTROLLER{
                 }
 
                 if ($disc!=null || $path!=null ) {
-                    if ($uploadedimg) {
+                    if ($uploadedimg) { 
                         USER_MODEL::Addpost($_SESSION['HASH'],$disc,$path);
                         $_POST=array ();
                     }else $error=3;

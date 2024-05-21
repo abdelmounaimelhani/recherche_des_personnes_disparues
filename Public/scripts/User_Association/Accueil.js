@@ -323,7 +323,7 @@ function Getusers(nom) {
         });
         if(data.asso.length > 0) data.asso.forEach(e => {
             user(e,'ass').then(res=>{users.append(res)})
-        })
+        }) 
         if(data.user.length == 0 && data.asso.length == 0) users.innerHTML = "<span class='user-res'>Aucune des resultat</span>";
         diveloader.style.display='none'
     })
