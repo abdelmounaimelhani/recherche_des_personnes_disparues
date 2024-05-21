@@ -32,8 +32,8 @@ class CONTROLLER
                 if ($resuser->nb!=0) {
                     $passuser=USER_MODEL::Passuser($email);
                     if (password_verify($pass, $passuser->pass)) {
-                        $_SESSION['info']=USER_MODEL::Infouser($passuser->id);
                         $_SESSION["user"]=$passuser->id;
+                        $_SESSION['info']=USER_MODEL::Infouser($_SESSION["user"]);
                         $_SESSION["HASH"]=USER_MODEL::GetHash($passuser->id)->HASH_ID;
                         echo json_encode(["code"=>2]);
                     }else
