@@ -1,27 +1,74 @@
 <?php ob_start(); 
     $title='Rechech_disparue';
+
 ?>
 <div class="row">
+  <?php if(isset($_GET["IDD"]) && isset($Disp)){ ?>
+    <div class="card">
+      <div class="card-body p-3">
+        <div class="row gx-4">
+          <div class="col-auto">
+            <div class="position-relative">
+              <img src="<?=$Disp->photo?>" alt="profile_image" class="avatar avatar-xxl border-radius-lg shadow-sm">
+            </div>
+          </div>
+          <div class="col-3 text-center my-auto">
+            <div class="h-100">
+              <p class="mb-0 font-weight-bold text-sm">Nom</p>
+              <p class="mb-1"><?=$Disp->nom?></p>
+            </div>
+            <div class="h-100">
+              <p class="mb-0 font-weight-bold text-sm">Prenom</p>
+              <p class="mb-1"><?=$Disp->prenom?></p>
+            </div>
+          </div>
+          <div class="col-3 text-center my-auto">
+            <div class="h-100">
+              <p class="mb-0 font-weight-bold text-sm">Gennre</p>
+              <p class="mb-1"><?php if($Disp->Gennre=="H") echo "Homme" ; else echo "Famme" ?></p>
+            </div>
+            <div class="h-100">
+              <p class="mb-0 font-weight-bold text-sm">ville</p>
+              <p class="mb-1"><?=$Disp->ville?></p>
+            </div>
+          </div>
+          <div class="col-3 text-center my-auto">
+            <div class="h-100">
+              <p class="mb-0 font-weight-bold text-sm">Date Disparition</p>
+              <p class="mb-1"><?=$Disp->date_disparition?></p>
+            </div>
+            <div class="h-100">
+              <p class="mb-0 font-weight-bold text-sm">Date Naissance</p>
+              <p class="mb-1"><?=$Disp->date_N?></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="btn btn-github">Recherch Avec Image</a>
+      </div>
+    </div>
+  <?php }else{ ?>
   <form action="" method="post">
-  <table class="table align-items-center mb-0 bg-white rounded-3">
+    <table class="table align-items-center mb-0 bg-white rounded-3">
       <tbody>
         <tr>
           <td>
             <div class="col-10 d-flex flex-column justify-content-center">
               <h6 class="mb-0 text-sm text-dark">Nom</h6>
-              <input value="<?php if(isset($_POST['Nom'])) echo $_POST['Nom'] ?>" placeholder="Nom" name="Nom" type="text"  class="form-control">
+              <input  value="<?php if(isset($_POST['Nom'])) echo $_POST['Nom'] ?>" placeholder="Nom" name="Nom" type="text"  class="form-control">
             </div>
           </td>
           <td>
             <div class="col-10 d-flex flex-column justify-content-center">
               <h6 class="mb-0 text-sm text-dark">Prenom</h6>
-              <input value="<?php if(isset($_POST['Prenom'])) echo $_POST['Prenom'] ?>" placeholder="Prenom" name="Prenom" type="text"  class="form-control">
+              <input  value="<?php if(isset($_POST['Prenom'])) echo $_POST['Prenom'] ?>" placeholder="Prenom" name="Prenom" type="text"  class="form-control">
             </div>
           </td>
           <td>
             <div class="col-10 d-flex flex-column justify-content-center">
               <h6 class="mb-0 text-sm text-dark">Ville</h6>
-              <input value="<?php if(isset($_POST['Ville'])) echo $_POST['Ville'] ?>" placeholder="Ville" name="Ville" type="text"  class="form-control">
+              <input  value="<?php if(isset($_POST['Ville'])) echo $_POST['Ville'] ?>" placeholder="Ville" name="Ville" type="text"  class="form-control">
             </div>
           </td>
         </tr>
@@ -29,16 +76,16 @@
           <td>
             <div class="col-10 d-flex flex-column justify-content-center">
               <h6 class="mb-0 text-sm text-dark">Gennre</h6>
-              <select name="Gennre"  class="form-select">
-                <option value="H" <?php if(isset($_POST['Gennre'])&&$_POST['Gennre']=='H') echo "selected" ?>>Homme</option>
-                <option value="F" <?php if(isset($_POST['Gennre'])&&$_POST['Gennre']=='F') echo "selected" ?>>Famme</option>
-              </select>
+                  <select name="Gennre"  class="form-select">
+                    <option value="H" <?php if(isset($_POST['Gennre'])&&$_POST['Gennre']=='H') echo "selected" ?>>Homme</option>
+                    <option value="F" <?php if(isset($_POST['Gennre'])&&$_POST['Gennre']=='F') echo "selected" ?>>Famme</option>
+                  </select>
             </div>
           </td>
           <td>
             <div class="col-10 d-flex flex-column justify-content-center">
               <h6 class="mb-0 text-sm text-dark">Date Naissance</h6>
-              <input value="<?php if(isset($_POST['Daten'])) echo $_POST['Daten'] ?>"  name="Daten" type="date"  class="form-control">
+              <input  value="<?php if(isset($_POST['Daten'])) echo $_POST['Daten'] ?>"  name="Daten" type="date"  class="form-control">
             </div>
           </td>
           <td>
@@ -56,6 +103,7 @@
       </tbody>
     </table>
   </form>
+  <?php }?>
 </div>
 <?php if(isset($data)) : ?>
 <div class="row">
@@ -81,7 +129,7 @@
               <span class="mb-2 text-xs">
                 Date Naissance:
                 <span class="text-dark font-weight-bold ms-sm-2"><?= $value->date_N ?></span></span>
-              <span class="text-xs">
+              <span class="mb-2 text-xs">
                 Ville:
                 <span class="text-dark ms-sm-2 font-weight-bold">
                   <?= $value->ville ?>
@@ -98,15 +146,11 @@
               <h6 class="mb-3 text-sm"><?= $value->assnom ?></h6>
               <span class="mb-2 text-xs">
                 Address:
-                <span class="text-dark font-weight-bold ms-sm-2"
-                  ><?= $value->adress ?></span
-                ></span
-              >
+                <span class="text-dark font-weight-bold ms-sm-2"><?= $value->adress ?></span>
+              </span>
               <span class="mb-2 text-xs">
                 Email Address:
-                <span class="text-dark ms-sm-2 font-weight-bold"
-                  ><?= $value->email ?></span
-                >
+                <span class="text-dark ms-sm-2 font-weight-bold"><?= $value->email ?></span>
               </span>
               <span class="text-xs">
                 telephone:

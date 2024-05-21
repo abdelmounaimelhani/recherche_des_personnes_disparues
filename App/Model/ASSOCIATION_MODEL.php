@@ -96,11 +96,11 @@ class ASSOCIATION_MODEL
         return $res;
     }
     
-    public static function info_indiv($idind,$idAss){
+    public static function info_indiv($idind,$HASH){
         $conn=Connexion::Connexion();
-        $st=$conn->prepare("SELECT * FROM individus WHERE id=:id AND Asso=:idas");
+        $st=$conn->prepare("SELECT * FROM disparu WHERE id=:id AND `HASH`=:HASHID");
         $st->bindParam(':id', $idind);
-        $st->bindParam(':idas', $idAss);
+        $st->bindParam(':HASHID', $HASH);
         $st->execute();
         $res = $st->fetch(PDO::FETCH_OBJ);
         return $res;

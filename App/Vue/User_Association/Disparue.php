@@ -21,9 +21,14 @@
                 <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date De Naissance</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date d'entrée</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        <?php 
+                            if (isset($_SESSION["ass"])) echo "Date d'entrée";
+                            elseif(isset($_SESSION["user"])) echo "Date disparition";
+                        ?> 
+                    </th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ville</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" colspan="2">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,7 +36,7 @@
                     foreach ($RES as $indi) :
                 ?>
                 <tr>
-                    <td>
+                    <td >
                     <div class="d-flex px-2 py-1">
                         <div>
                         <img src="<?=$indi->photo?>" class="avatar avatar-sm me-3" alt="user1">
@@ -47,15 +52,24 @@
                     
                     </td>
                     <td class="align-middle text-center text-sm">
-                    <p class="text-xs font-weight-bold mb-0"><?=$indi->date_entre?></p>
+                        <p class="text-xs font-weight-bold mb-0">
+                            <?=$indi->date_disparition?>
+                            
+                        </p>
                     </td>
                     <td class="align-middle text-center">
                     <span class="text-secondary text-xs font-weight-bold"><?=$indi->ville?></span>
                     </td>
                     <td class="align-middle">
-                    <a href="<?=$indi->id?>" class="text-secondary font-weight-bold text-xs" title="Edit user">
-                        Edit
-                    </a>
+                        <a href="<?=$indi->id?>" class="text-success font-weight-bold text-xs d-block text-center" title="Edit Disparue">
+                        <i class="fas fa-edit text-sm opacity-10"></i> Modifier
+                        </a>
+                        
+                    </td>
+                    <td class="align-middle">
+                        <a href="http://localhost/Project/?action=Recherch_desparu&IDD=<?=$indi->id?>" class="text-primary font-weight-bold text-xs d-block text-center" title="Edit Disparue">
+                            <i class="fas fa-search text-sm opacity-10"></i> Serch
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach; } else{ ?>

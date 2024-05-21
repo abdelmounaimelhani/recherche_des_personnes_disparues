@@ -33,8 +33,8 @@ class CONTROLLER
                     $passuser=USER_MODEL::Passuser($email);
                     if (password_verify($pass, $passuser->pass)) {
                         $_SESSION["user"]=$passuser->id;
-                        $_SESSION['info']=USER_MODEL::Infouser($_SESSION["user"]);
                         $_SESSION["HASH"]=USER_MODEL::GetHash($passuser->id)->HASH_ID;
+                        $_SESSION['info']=USER_MODEL::Infouser($_SESSION["HASH"]);
                         echo json_encode(["code"=>2]);
                     }else
                         echo json_encode(["code"=>1]);
@@ -294,8 +294,19 @@ class CONTROLLER
     }
 
     public static function Recherch_desparu() {
-        if (isset($_POST["Rechercher"])) {
+        $tablekey=[];
+        if (isset($_GET["IDD"])) {
+            $Disp=ASSOCIATION_MODEL::info_indiv($_GET["IDD"],$_SESSION["HASH"]);
+            $tablekey["nom"]=$Disp->nom;
+            $tablekey["prenom"]=$Disp->prenom;
+            $tablekey["Gennre"]=$Disp->Gennre;
+            $tablekey["date_disparition"]=$Disp->date_disparition;
             
+            if(isset($_SESSION["user"])) $data=USER_MODEL::Recherch_disparu($tablekey);
+            elseif(isset($_SESSION["ass"])) $data=ASSOCIATION_MODEL::Recherch_disparu($tablekey);
+            
+        }
+        if (isset($_POST["Rechercher"])) {
             if (isset($_POST["Nom"])&& isset($_POST["Prenom"]) &&
                 isset($_POST["Gennre"])&& isset($_POST["Daten"])
                 && isset($_POST["Ville"])&& isset($_POST["Dated"])
@@ -306,7 +317,7 @@ class CONTROLLER
                 $Daten = htmlspecialchars($_POST["Daten"]);
                 $Ville = htmlspecialchars($_POST["Ville"]);
                 $Dated = htmlspecialchars($_POST["Dated"]);
-                $tablekey=[];
+                
                 if(!empty($Nom))    $tablekey["nom"]=$Nom;
                 if(!empty($Prenom)) $tablekey["prenom"]=$Prenom;
                 if(!empty($Gennre)) $tablekey["Gennre"]=$Gennre;
@@ -317,7 +328,6 @@ class CONTROLLER
                     if(isset($_SESSION["user"])) $data=USER_MODEL::Recherch_disparu($tablekey);
                     elseif(isset($_SESSION["ass"])) $data=ASSOCIATION_MODEL::Recherch_disparu($tablekey);
                 }
-                
             }
         }
         include_once "./App/Vue/User_Association/Recherch_disparu.php";

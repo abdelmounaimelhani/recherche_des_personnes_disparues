@@ -1,6 +1,5 @@
 <?php ob_start();
     if (isset($_SESSION['user'])) {
-        var_dump($_SESSION['info']);
         $nom=$_SESSION['info']->nom." ".$_SESSION['info']->prenom;
     }else $nom=$_SESSION['info']->nom;
     $title = 'Accueil';
