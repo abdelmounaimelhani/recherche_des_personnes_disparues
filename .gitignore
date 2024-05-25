@@ -1,6 +1,7 @@
 assets/img
 new_tmp
 Files
-Pythonenv/images
-Pythonenv/Lib
-Pythonenv/Scripts
+Python/images
+Python/Nouveau dossier
+Python/Lib
+Python/Scripts

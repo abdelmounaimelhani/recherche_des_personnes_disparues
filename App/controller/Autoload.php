@@ -1,7 +1,7 @@
 <?php 
 
 class Autoloader
-{    
+{     
     public static function Require_controller() {
         spl_autoload_register(function ($class) {
             // Convert namespace separators to directory separators
@@ -29,4 +29,3 @@ class Autoloader
         });
     }
 }
-

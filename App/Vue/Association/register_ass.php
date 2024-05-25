@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='Public/styles/Users/register.css'>
     <title>Document</title>
 </head>
+
 <body>
-<div class="containerdiv">
-        <div class="bg_img"></div> 
+    <div class="containerdiv">
+        <div class="bg_img"></div>
         <form id="form_register" action="" method="post" class="form-register">
             <h1>créer Compte Association</h1>
             <div class="div_valid" id="div_valid"></div>
@@ -39,9 +41,10 @@
             </div>
             <div class="form-group">
                 <label>Confirmer Mote de pass</label>
-                <input class="form-input" type="password" name="password2" id="password2" placeholder="Confirmer Mot de passe">
+                <input class="form-input" type="password" name="password2" id="password2"
+                    placeholder="Confirmer Mot de passe">
             </div>
-    
+
             <input name="submit" id="btn" type="submit" class="form-btn">
             <div class="group-link">
                 <a href="?action=Register_user" class="form-link">compte personnel</a>
@@ -50,8 +53,7 @@
         </form>
     </div>
 
-<script src='Public/scripts/Association/register_ass.js'></script>
+    <script src='Public/scripts/Association/register_ass.js'></script>
 </body>
-</html>
 
-    
+</html>

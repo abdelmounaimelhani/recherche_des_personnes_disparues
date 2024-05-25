@@ -1,0 +1,113 @@
+pip install setuptools
+pip install git+https://github.com/ageitgey/face_recognition_models
+pip install flask face_recognition opencv-python-headless numpy requests   
+
+
+
+
+from flask import Flask, request, jsonify
+import cv2
+import face_recognition
+import glob
+import os
+import pymysql
+from flask_cors import CORS, cross_origin
+import logging
+
+app = Flask(__name__)
+CORS(app)  
+
+logging.basicConfig(level=logging.DEBUG)
+
+def compare_faces(path,image_paths):
+    reference_image_path = 'D:/ABELMOUNAIM/App/XAMPP/htdocs/Project/' + path
+
+    # Check if the reference image exists
+    if not os.path.exists(reference_image_path):
+            #Reference image not found
+        return "Reference image not found"
+
+    try:
+        # Load and process the reference image
+        image1 = cv2.imread(reference_image_path)
+        if image1 is None:
+            return jsonify({'error': 'Failed to read the reference image'}), 500
+
+        rgbimage1 = cv2.cvtColor(image1, cv2.COLOR_BGR2RGB)
+        img_encodings1 = face_recognition.face_encodings(rgbimage1)
+        if not img_encodings1:
+            return {'error': 'No faces found in the reference image'}
+
+        similar_images = []
+
+        for image_path in image_paths:
+            image_path[1] = "D:/ABELMOUNAIM/App/XAMPP/htdocs/Project/"+image_path[1]
+            if image_path[1].lower().endswith(('.png', '.jpg', '.jpeg')):
+                image2 = cv2.imread(image_path)
+                if image2 is None:
+                    continue  # Skip files that couldn't be read
+
+                rgbimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2RGB)
+                img_encodings2 = face_recognition.face_encodings(rgbimage2)
+                if not img_encodings2:
+                    continue  # Skip images where no faces are found
+
+                # Compare each face in the reference image with each face in the current image
+                for encoding1 in img_encodings1:
+                    for encoding2 in img_encodings2:
+                        similarity_score = face_recognition.face_distance([encoding1], encoding2)[0]
+
+                        # Check if the similarity score is less than or equal to 0.6 (60% similarity)
+                        if similarity_score <= 0.6:
+                            similar_images.append(image_path[0])
+                            break  # If a match is found, no need to check other faces in this image
+
+        return jsonify(similar_images)
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+
+
+
+
+@app.route('/test', methods=['POST'])
+@cross_origin()
+def test():
+    try:
+        idindiv = request.json.get("id")
+        hash = request.json.get("hash")
+        datedisp = request.json.get("date")
+
+        # Configure the database connection parameters
+        connection = pymysql.connect(host='localhost',database='project',user='root',password='123456789')
+
+        if connection.open:
+            cursor = connection.cursor()
+            select_query = "SELECT * FROM disparu WHERE id = %s AND HASH = %s"
+            cursor.execute(select_query, (idindiv, hash))
+
+            cursor1 = connection.cursor()
+            select_query1 = "SELECT id,photo FROM disparu WHERE date_entre > %s AND type = 'IND'"
+            cursor1.execute(select_query1, (datedisp))
+            
+            records = cursor.fetchall()
+            Diss = cursor1.fetchall()
+            records=list(records)
+            Diss=list(Diss)
+            
+            if not records:
+                return jsonify({'error': 'No records found for the given ID and hash'})
+            if not Diss:
+                return jsonify({'error': 'Diss note fonde'})
+
+            return compare_faces(records[7],Diss)
+            #return jsonify ([records,Diss])
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+    
+
+if __name__ == '__main__':
+    app.run(debug=True)

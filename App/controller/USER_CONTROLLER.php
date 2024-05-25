@@ -9,7 +9,7 @@ class USER_CONTROLLER{
                 isset($_POST["email"]) && isset($_POST["Genner"]) &&
                 isset($_POST["Tele"])&&isset($_POST["password1"]) &&
                 isset($_POST["password2"])
-            ) {
+            ) { 
                 $nom=$_POST["nom"];$prenom=$_POST["prenom"];$email=$_POST["email"];$tele=$_POST["Tele"];
                 $genner=$_POST["Genner"];$pass1=$_POST["password1"];$pass2=$_POST["password2"];
                 if ($_POST["Genner"]== "H") {

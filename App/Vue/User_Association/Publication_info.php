@@ -20,7 +20,7 @@
     <div class="comments">
         <label>Comment</label>
         <hr>
-        
+
 
         <?php if ((bool) $comments) 
         for ($i=0; $i <2 ; $i++) :
@@ -34,30 +34,32 @@
                     $nom=$Data->nom;
                 }
             ?>
-            <div class="comment">
-                <div class="info">
-                        <img src="<?= $Data->photo ?>" alt="" class="comment_img">
-                        <div>
-                            <a href="<?=$Data->HASH_ID?>"  class="comment_info"><?=$nom?></a>
-                            <label class="datecomment"><?= $comment->date_comment?></label>
-                        </div>
-                        <?php if ($Data->HASH_ID==$_SESSION['HASH'] || $_GET["user"]==$_SESSION['HASH']) :
-                            ?>
-                            
-                            <a onclick="confirm('Suppremer le Commentaire')" href=<?="?action=Pubinfo&id=$_GET[id]&user=$_GET[user]&type=delet&idc=$comment->id"?>><img class="delet-icon" src="Public/imgs/delete.png" alt=""></a>
-                        <?php endif; ?>
+        <div class="comment">
+            <div class="info">
+                <img src="<?= $Data->photo ?>" alt="" class="comment_img">
+                <div>
+                    <a href="<?=$Data->HASH_ID?>" class="comment_info"><?=$nom?></a>
+                    <label class="datecomment"><?= $comment->date_comment?></label>
                 </div>
-                    <div class="comment_disc"><?=$comment->discription ?></div>
+                <?php if ($Data->HASH_ID==$_SESSION['HASH'] || $_GET["user"]==$_SESSION['HASH']) :
+                            ?>
+
+                <a onclick="confirm('Suppremer le Commentaire')"
+                    href=<?="?action=Pubinfo&id=$_GET[id]&user=$_GET[user]&type=delet&idc=$comment->id"?>><img
+                        class="delet-icon" src="Public/imgs/delete.png" alt=""></a>
+                <?php endif; ?>
             </div>
-        
+            <div class="comment_disc"><?=$comment->discription ?></div>
+        </div>
+
         <?php endforeach;
         endfor;
 
             else echo "<div class='comment_disc'>IL ne pas des Comment</div>"
         ?>
-        
+
     </div>
-    
+
 </div>
 
 <?php

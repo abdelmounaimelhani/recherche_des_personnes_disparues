@@ -171,9 +171,7 @@ form_register.addEventListener('submit',(e)=>{
                 };
                 disabledfalse();
         })
-        .catch(error => {
-            console.error('Fetch Error:', error);
-        });
+        
         
         
     }

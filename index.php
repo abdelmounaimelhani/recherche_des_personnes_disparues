@@ -34,7 +34,10 @@ if (isset($_GET['action'])) {
             case 'get_nb_msg': return CONTROLLER::get_nb_msg();
             case 'get_dernier_msg': return CONTROLLER::get_dernier_msg();
             case "Recherch_desparu": return CONTROLLER::Recherch_desparu();
-
+            case 'Modifier_desp':return CONTROLLER::Modifier_desp();
+            case 'Edit_Info_desparu':return CONTROLLER::Edit_Info_desparu();
+            case 'delet_Dispa':return CONTROLLER::Delet_desparu();
+            case 'get_info_disp':return CONTROLLER::get_info_disp();
             case 'test': return include_once ("./test.php");
         }
     }
@@ -56,8 +59,7 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             //association pages
             case 'creat_Indi': return CONTROLLER::creat_desparu();
-            case 'edite_indiv':return ASSOCIATION_CONTROLLER::Edit_Info_Individus();
-            case 'delet_indv':return ASSOCIATION_CONTROLLER::Delet_Individus();
+            
             case 'info_indiv': return ASSOCIATION_CONTROLLER::Get_Info_Individus() ;
             case 'Individue': return CONTROLLER::Get_disparus();
             case 'Profile': return ASSOCIATION_CONTROLLER::Profile();

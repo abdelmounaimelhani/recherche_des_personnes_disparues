@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Connexion</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -8,6 +9,7 @@
     <link rel='stylesheet' href='Public/styles/User_Association/login.css'>
 
 </head>
+
 <body>
     <div class="background">
         <div class="shape"></div>
@@ -18,22 +20,24 @@
 
         <label for="username">Username</label>
         <label id="emailer" class="errore"></label>
-        <input type="text" name="email" class="form-input" id="email" placeholder="Email" value="<?php if(isset($_COOKIE['email']))echo $_COOKIE['email']?>">
+        <input type="text" name="email" class="form-input" id="email" placeholder="Email"
+            value="<?php if(isset($_COOKIE['email']))echo $_COOKIE['email']?>">
         <label for="password">Mot De Pass</label>
         <label id="passer" class="errore"></label>
-        <input type="password" name="pass" class="form-input" id="Pass" placeholder="Mot De Pass" value="<?php if(isset($_COOKIE['pass']))echo $_COOKIE['pass']?>">
-        
+        <input type="password" name="pass" class="form-input" id="Pass" placeholder="Mot De Pass"
+            value="<?php if(isset($_COOKIE['pass']))echo $_COOKIE['pass']?>">
+
         <div class="enrgestre">
             <span>Enregistrez vos informations de connexion</span>
-            <input type="checkbox" name="eng"  id="eng" >
+            <input type="checkbox" name="eng" id="eng">
         </div>
-        
+
         <button id="btn">Connexion</button>
         <div class="social">
-          <div class=""><a href="?action=Register_user"> Creer un Cmpet </a></div>
+            <div class=""><a href="?action=Register_user"> Creer un Cmpet </a></div>
         </div>
     </form>
     <script src='Public/scripts/User_Association/login.js'></script>
 </body>
-</html>
 
+</html>

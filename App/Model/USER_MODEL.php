@@ -34,9 +34,9 @@ class USER_MODEL{
         return $res;
     }
 
-    public static function Register($nom, $prenom, $email, $gender, $pass,$tele , $photo) {
-        //Créer un compte.
-        $st = Connexion::Connexion()->prepare("INSERT INTO userTable VALUES (NULL, ?, ?, ?, ?, ?, ?, ?);");
+    public static function Register($nom, $prenom, $email, $gender, $pass, $tele, $photo) {
+        // Create a new user account.
+        $st = Connexion::Connexion()->prepare("INSERT INTO userTable (nom, prenom, genner, email, pass, tele, photo) VALUES (?, ?, ?, ?, ?, ?, ?);");
         $st->bindParam(1, $nom);
         $st->bindParam(2, $prenom);
         $st->bindParam(3, $gender);
@@ -47,6 +47,7 @@ class USER_MODEL{
         $res = $st->execute();
         return $res;
     }
+    
     
     public static function Login($email,$pass){
         //Connexion::Connexionn à un compte.

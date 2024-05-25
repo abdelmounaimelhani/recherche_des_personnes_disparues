@@ -6,10 +6,10 @@ import os
 
 app = Flask(__name__)
 
-@app.route('/compare-faces', methods=['GET'])
+@app.route('/', methods=['GET'])
 def compare_faces():
-    folder_dir = 'D:/ABELMOUNAIM/App/XAMPP/htdocs/Project/Pythonenv/images'
-    reference_image_path = "D:/ABELMOUNAIM/App/XAMPP/htdocs/Project/Pythonenv/images/cristiano ronaldo 1.jpg"
+    folder_dir = 'D:/ABELMOUNAIM/App/XAMPP/htdocs/Project/Python/images'
+    reference_image_path = "D:/ABELMOUNAIM/App/XAMPP/htdocs/Project/Python/images/IMG_20231006_131000.jpg"
 
     # Check if the reference image exists
     if not os.path.exists(reference_image_path):

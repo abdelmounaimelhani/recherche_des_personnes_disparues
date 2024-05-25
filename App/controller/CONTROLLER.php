@@ -264,16 +264,12 @@ class CONTROLLER
                 ) {
                     $Photo=null;
                     $error=0;
-                    
                     if (isset($_FILES["Photo"])) {
                         $uploadedFile = $_FILES["Photo"];
                         if (is_valid_image($uploadedFile)) {
                             if ($uploadedFile['name'] != "" && $uploadedFile['error'] == 0) {
-                                
                                 $Photo = upload_image($uploadedFile);
-                                if ($Photo==null) {
-                                    $error=2;
-                                }
+                                if ($Photo==null) {$error=2;}
                             }
                         } else $error=3;
                     }else $error=4;
@@ -292,7 +288,59 @@ class CONTROLLER
         }
         include_once "./App/Vue/User_Association/Creat_disparu.php";
     }
-
+    public static function Modifier_desp(){
+        if (isset($_GET["IDD"])) {
+            $Disp=ASSOCIATION_MODEL::info_indiv($_GET["IDD"],$_SESSION["HASH"]);
+            if ($Disp) {
+                if (isset($_SESSION["user"])) $title="Disparue";
+                if (isset($_SESSION["ass"])) $title="Indiv";
+                include_once "./App/Vue/User_Association/Edit_disparue.php";
+            }else header("location:http://localhost/Project");
+        }else header("location:http://localhost/Project");
+    }
+    public static function Edit_Info_desparu()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST["Dateen"]) && isset($_POST["Prenom"]) && isset($_POST["Villa"])&&isset($_POST["datenai"])&&isset($_POST["nom"])&&isset($_POST["indv"])) {
+                if (!empty($_POST["Dateen"]) && !empty($_POST["Prenom"]) && !empty($_POST["Villa"])&&!empty($_POST["datenai"])&&!empty($_POST["nom"])&&!empty($_POST["indv"])) {
+                    $Dateen = DateTime::createFromFormat('Y-m-d', $_POST["Dateen"]);
+                    $datenai = DateTime::createFromFormat('Y-m-d', $_POST["datenai"]);
+                    if ($datenai != false && $Dateen!=false) {
+                        $id=$_POST["indv"];
+                        $asso=$_SESSION["ass"];
+                        $res=ASSOCIATION_MODEL::info_indiv($id,$asso);
+                        if ((bool) $res) {
+                            $res=ASSOCIATION_MODEL::edite_indiv($_POST["nom"],$_POST["Prenom"],$_POST["Dateen"],$_POST["datenai"],$_POST["Villa"],$id,$asso);
+                            if ($res) {
+                                echo json_encode(["code"=>0]);
+                            }else echo json_encode(["code"=>5]);
+                        }else echo json_encode(["code"=>4]);
+                    }else echo json_encode(["code"=>3]);
+                }else echo json_encode(["code"=>2]);
+            }else echo json_encode(["code"=>1]);
+        }
+    }
+    
+    public static function Delet_desparu()
+    {
+        if ($_SERVER['REQUEST_METHOD']=="POST") {
+            if (isset($_POST['idin'])) {
+                if (!empty($_POST['idin']) && is_numeric($_POST['idin'])) {
+                    $id=$_POST["idin"];
+                    $asso=$_SESSION["ass"];
+                    $res=ASSOCIATION_MODEL::info_indiv($id,$asso);
+                    if ((bool) $res) {
+                        ASSOCIATION_MODEL::delet_indiv($id,$asso);
+                        $res=ASSOCIATION_MODEL::info_indiv($id,$asso);
+                        if (!(bool) $res) {
+                            echo json_encode(["code"=>0]);
+                        }else echo json_encode(["code"=>1]);
+                    }else echo json_encode(["code"=>2]);
+                }else echo json_encode(["code"=>1]);
+            }else echo json_encode(["code"=>1]);
+        }else header("location:http://localhost/Project/?action=Accueil");
+    }
+    
     public static function Recherch_desparu() {
         $tablekey=[];
         if (isset($_GET["IDD"])) {
@@ -331,5 +379,14 @@ class CONTROLLER
             }
         }
         include_once "./App/Vue/User_Association/Recherch_disparu.php";
+    }
+
+    public static function get_info_disp(){
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST["id"])&&isset($_POST["hash"])) {
+                $Disp=ASSOCIATION_MODEL::info_indiv($_POST["id"],$_POST["hash"]);
+                echo json_encode(["res"=>$Disp]);
+            }else echo json_encode(["res"=>1]);
+        }
     }
 }   
