@@ -431,5 +431,7 @@ class USER_MODEL{
         $st->execute();
         $res = $st->fetchAll(PDO::FETCH_OBJ);
         return $res;
-    }
+    } 
+
+    
 }

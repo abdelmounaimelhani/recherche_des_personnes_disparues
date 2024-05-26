@@ -46,17 +46,14 @@ function create_Dispa(disp) {
     Ville.innerHTML = `Ville: <span class="text-dark ms-sm-2 font-weight-bold">${disp.ville}</span>`;
 
     const Genner = creat_element("span", ["text-xs"]);
-    Genner.innerHTML = `Genner: <span class="text-dark ms-sm-2 font-weight-bold">${disp.Gennre === "H" ? "Homme" : "Famme"}</span>`;
+    Genner.innerHTML = `Genner: <span class="text-dark ms-sm-2 font-weight-bold">${disp.Gennre === "H" ? "Homme" : "Femme"}</span>`;
 
     Div_DISP1.append(Nom, date_N, Ville, Genner);
 
     // Creating the second detail division
     const Div_DISP2 = creat_element("div", ["d-flex", "flex-column", "col-4"]);
-    const Assnom = creat_element("h6", ["mb-3", "text-sm"]);
-    Assnom.innerText = disp.Nomass;
-
-    const Address = creat_element("span", ["mb-2", "text-xs"]);
-    Address.innerHTML = `Address: <span class="text-dark font-weight-bold ms-sm-2">${disp.adress}</span>`;
+    const Nomc = creat_element("h6", ["mb-3", "text-sm"]);
+    Nomc.innerText = disp.nomC;
 
     const Email = creat_element("span", ["mb-2", "text-xs"]);
     Email.innerHTML = `Email Address: <span class="text-dark ms-sm-2 font-weight-bold">${disp.email}</span>`;
@@ -64,7 +61,7 @@ function create_Dispa(disp) {
     const Telephone = creat_element("span", ["text-xs"]);
     Telephone.innerHTML = `telephone: <span class="text-dark ms-sm-2 font-weight-bold">${disp.tele}</span>`;
 
-    Div_DISP2.append(Assnom, Address, Email, Telephone);
+    Div_DISP2.append(Nomc, Email, Telephone);
 
     // Creating the action division
     const Div_Action = creat_element("div", ["ms-auto", "text-end"]);
@@ -84,41 +81,44 @@ function create_Dispa(disp) {
     card_body.append(UL);
 
     // Assuming you want to append this card body to a parent container
-    // For example, if there's a div with id "container" in your HTML
+    // For example, if there's a div with id "Res" in your HTML
     document.getElementById("Res").append(card_body);
 }
+
 
 // Fonction pour envoyer une requête à l'URL et obtenir les informations des individus
 function get_info_res(id) {
     const data=new FormData()
     data.append("id",id)
-    fetch("http://localhost/Project/?action=get_info_disp", {method: "POST",body: data})
+    fetch("http://localhost/Project/?action=get_info_indi", {method: "POST",body: data})
     .then(res => {return res.json();})
     .then(res => {
-        console.log(res);
-        create_Dispa(res.res)
+        console.log(res.res[0]);
+        create_Dispa(res.res[0])
     })// Appelez la fonction Recherch avec les données reçues
 }
 
 // Fonction pour rechercher des informations supplémentaires en utilisant les données reçues
 async function Recherch(indi) {
     const allParams = getAllQueryParams();  // Obtenez tous les paramètres une seule fois
-    await fetch("http://127.0.0.1:5000/GetDisp", { 
+
+    await fetch("http://127.0.0.1:5000/GetIndi", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({"id": allParams.IDD,"hash": allParams.hash,"date": indi.date_disparition})
+        body: JSON.stringify({"id": allParams.IDD ,"hash": allParams.hash ,"date": indi.date_entre})
     })
     .then(response => response.json())
     .then(data => {
-    if (data.length > 0) {
-        data.forEach(D => {
-            get_info_res(D)
-        });
-    }else
-    document.getElementById("Res").innerHTML+=`<div class="card-body pt-4 p-3">
-    <p class="text-center">Il n'y a aucun résultat pour ces données</p>
-    </div>`
-    document.getElementById("titre").innerHTML="Résultats de la recherche pour personnes disparues"
+        
+        if (data.length > 0) {
+            data.forEach(D => {
+                get_info_res(D)
+            });
+        }else
+        document.getElementById("Res").innerHTML+=`<div class="card-body pt-4 p-3">
+            <p class="text-center">Il n'y a aucun résultat pour ces données</p>
+        </div>`
+        document.getElementById("titre").innerHTML="Résultats de la recherche pour personnes disparues"
     })
     .catch(error => {console.error('Error:', error);});
 }

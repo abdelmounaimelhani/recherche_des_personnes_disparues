@@ -59,8 +59,10 @@
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     <p class="text-xs font-weight-bold mb-0">
-                                        <?=$indi->date_disparition?>
-
+                                        <?php if (isset($_SESSION["ass"])) echo $indi->date_entre;
+                                        else echo $indi->date_disparition;    
+                                    ?>
+                                        
                                     </p>
                                 </td>
                                 <td class="align-middle text-center">

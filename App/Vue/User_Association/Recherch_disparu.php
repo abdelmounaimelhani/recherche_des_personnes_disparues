@@ -13,49 +13,49 @@
   border-color: #111 #111 transparent transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
-}
-.loaderdisp::after,
-.loaderdisp::before {
-  content: '';  
-  box-sizing: border-box;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  border: 3px solid;
-  border-color: transparent transparent #5e72e4 #5e72e4;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  box-sizing: border-box;
-  animation: rotationBack 0.5s linear infinite;
-  transform-origin: center center;
-}
-.loaderdisp::before {
-  width: 10px;
-  height: 10px;
-  border-color: #111 #111 transparent transparent;
-  animation: rotation 1.5s linear infinite;
-}
-    
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} 
-@keyframes rotationBack {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
-}
+    }
+    .loaderdisp::after,
+    .loaderdisp::before {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border: 3px solid;
+    border-color: transparent transparent #5e72e4 #5e72e4;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: rotationBack 0.5s linear infinite;
+    transform-origin: center center;
+    }
+    .loaderdisp::before {
+    width: 10px;
+    height: 10px;
+    border-color: #111 #111 transparent transparent;
+    animation: rotation 1.5s linear infinite;
+    }
+        
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
+    @keyframes rotationBack {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+    }
     
 </style>
 <div class="row">
@@ -92,10 +92,17 @@
                     </div>
                 </div>
                 <div class="col-3 text-center my-auto">
-                    <div class="h-100">
-                        <p class="mb-0 font-weight-bold text-sm">Date Disparition</p>
-                        <p class="mb-1"><?=$Disp->date_disparition?></p>
-                    </div>
+                    <?php if (isset($_SESSION["user"])) {?>
+                        <div class="h-100">
+                            <p class="mb-0 font-weight-bold text-sm">Date Disparition</p>
+                            <p class="mb-1"><?=$Disp->date_disparition?></p>
+                        </div>
+                    <?php }elseif(isset($_SESSION["ass"])){?>
+                        <div class="h-100">
+                            <p class="mb-0 font-weight-bold text-sm">Date Entre</p>
+                            <p class="mb-1"><?=$Disp->date_entre?></p>
+                        </div>
+                    <?php }?>
                     <div class="h-100">
                         <p class="mb-0 font-weight-bold text-sm">Date Naissance</p>
                         <p class="mb-1"><?=$Disp->date_N?></p>
@@ -178,9 +185,9 @@
 <?php if(isset($data)) : ?>
 <div class="row">
     <div class="col-12 mt-4" >
-        <div class="card" id="Res">
+        <div class="card pb-3" id="Res">
             <div class="card-header pb-0 px-3">
-                <h6 class="mb-0 d-flex align-content-center" id="titre">Résultats de la recherche pour personnes disparues </h6>
+                <h6 class="mb-0 d-flex align-content-center me-2" id="titre">Résultats de recherche </h6>
             </div>
             <?php
       if(count($data)>0) {
@@ -291,7 +298,11 @@
         </div>
     </div>
 </div>
-<script src="Public/scripts/User_Association/ApiDis.js"></script>
+<?php if (isset($_SESSION['ass'])) {?>
+    <script src="Public/scripts/User_Association/ApiIndi.js"></script>
+<?php }elseif(isset($_SESSION['user'])){?>
+    <script src="Public/scripts/User_Association/ApiDis.js"></script>
+<?php }?>
 <?php $content = ob_get_clean();
     include_once("./App/Vue/Mastre.php");
-?>
+?> 

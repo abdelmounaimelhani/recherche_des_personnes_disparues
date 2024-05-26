@@ -348,10 +348,16 @@ class CONTROLLER
             $tablekey["nom"]=$Disp->nom;
             $tablekey["prenom"]=$Disp->prenom;
             $tablekey["Gennre"]=$Disp->Gennre;
-            $tablekey["date_disparition"]=$Disp->date_disparition;
             
-            if(isset($_SESSION["user"])) $data=USER_MODEL::Recherch_disparu($tablekey);
-            elseif(isset($_SESSION["ass"])) $data=ASSOCIATION_MODEL::Recherch_disparu($tablekey);
+            if(isset($_SESSION["user"])){
+                $tablekey["date_disparition"]=$Disp->date_disparition;
+                $data=USER_MODEL::Recherch_disparu($tablekey);
+            } 
+            elseif(isset($_SESSION["ass"])) {
+                
+                $tablekey["date_entre"]=$Disp->date_entre;
+                $data=ASSOCIATION_MODEL::Recherch_disparu($tablekey);
+            }
             
         }
         if (isset($_POST["Rechercher"])) {
@@ -390,6 +396,16 @@ class CONTROLLER
                 $Disp=ASSOCIATION_MODEL::info_indiv($_POST["id"]);
                 echo json_encode(["res"=>$Disp]);
             }else echo json_encode(["res"=>1]);
+        }
+    }
+
+    public static function get_info_Di(){
+        /*$data=ASSOCIATION_MODEL::get_info_Disp(24);
+        echo json_encode(["res"=>$data]);*/
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if(isset($_POST["id"])) {$Disp=ASSOCIATION_MODEL::get_info_Disp($_POST["id"]);
+                echo json_encode(["res"=>$Disp]);
+            }
         }
     }
 }   

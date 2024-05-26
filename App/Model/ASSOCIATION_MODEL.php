@@ -234,20 +234,32 @@ class ASSOCIATION_MODEL
         return $st->fetch(PDO::FETCH_OBJ);
     }
 
+    
     public static function Recherch_disparu($tablekey){
-        $requte="SELECT d.* , concat(us.nom,' ',us.prenom) AS 'nomC' ,us.tele,us.email
-        from disparu d,usertable us,user_hash uh
-        WHERE d.HASH=uh.HASH_ID AND uh.`id-user`=us.id AND type='DIS' AND ";
+        $requte="SELECT d.*, CONCAT(us.nom, ' ', us.prenom) AS 'nomC', us.tele, us.email 
+                FROM disparu d, usertable us ,user_hash uh 
+                WHERE d.HASH=uh.HASH_ID AND us.id=uh.`id-user` ";
         foreach ($tablekey as $key => $value) {
-            if ($key == "date_disparition") $requte.=" d.date_disparition <= '$value' AND ";
-            elseif ($key == "date_N") $requte.=" d.date_N <= '$value' AND ";
-            elseif ($key == "Gennre") $requte.=" d.Gennre = '$value' AND ";
-            else $requte.="d.$key LIKE '%$value%' AND ";
+            if ($key == "date_entre") $requte.="AND d.date_disparition <= '$value'  ";
+            elseif ($key == "date_N") $requte.="AND d.date_N >= '$value'  ";
+            elseif ($key == "Gennre") $requte.="AND d.Gennre = '$value'  ";
+            else $requte.="AND d.$key LIKE '%$value%'";
         }
-       
-        $requte=substr($requte,0,-5);
         $st = Connexion::Connexion()->prepare($requte);
         $st->execute();
+        $res = $st->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
+    
+    public static function get_info_Disp($id) {
+        $requte = "SELECT d.*, CONCAT(u.nom, ' ', u.prenom) AS 'nomC', u.email, u.tele
+                   FROM disparu d
+                   JOIN user_hash uh ON d.HASH = uh.HASH_ID
+                   JOIN usertable u ON uh.`id-user` = u.id
+                   WHERE d.id = :id ";
+        $st = Connexion::Connexion()->prepare($requte);
+        //$st->bindParam()
+        $st->execute([":id" => $id]);
         $res = $st->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }

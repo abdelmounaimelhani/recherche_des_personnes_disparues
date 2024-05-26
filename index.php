@@ -38,6 +38,8 @@ if (isset($_GET['action'])) {
             case 'Edit_Info_desparu':return CONTROLLER::Edit_Info_desparu();
             case 'delet_Dispa':return CONTROLLER::Delet_desparu();
             case 'get_info_disp':return CONTROLLER::get_info_disp();
+            case 'get_info_indi':return CONTROLLER::get_info_Di();
+            
             case 'test': return include_once ("./test.php");
         }
     }

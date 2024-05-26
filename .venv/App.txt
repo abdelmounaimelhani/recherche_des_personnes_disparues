@@ -16,7 +16,7 @@ def compare_faces(reference_path, image_paths):
 
     if not os.path.exists(reference_image_path):
         return jsonify({'error': 'Reference image not found'}), 404
-
+ 
     try:
         image1 = cv2.imread(reference_image_path)
         if image1 is None:
@@ -40,7 +40,8 @@ def compare_faces(reference_path, image_paths):
                 img_encodings2 = face_recognition.face_encodings(rgbimage2)
                 if not img_encodings2:
                     continue
-
+                img_encoding2 = img_encoding2[0]
+                
                 for encoding1 in img_encodings1:
                     for encoding2 in img_encodings2:
                         similarity_score = face_recognition.face_distance([encoding1], encoding2)[0]

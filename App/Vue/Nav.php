@@ -1,5 +1,7 @@
-<div class="min-height-200 bg-primary position-absolute w-100"></div>
-<aside class="bg-dark sidenav  navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
+<?php $bg1 = (isset($_SESSION["user"])) ? "bg-dark" : "bg-warning" ; ?>
+<?php $bg2 = (isset($_SESSION["user"])) ? "bg-gradient-faded-dark" : "bg-gradient-faded-warning" ; ?>
+<div class="min-height-200 <?=$bg1?> position-absolute w-100"></div>
+<aside class="<?=$bg2?> sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
     id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
@@ -16,7 +18,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="?action=Accueil">
                     <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        class=" icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-home text-white text-sm opacity-10"></i>
                     </div>
                     <span class="text-white nav-link-text ms-1">Accueil</span>
@@ -30,7 +32,7 @@
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-list text-white text-sm opacity-10"></i>
                     </div>
-                    <span class="text-white nav-link-text ms-1"> Mes Publications</span>
+                    <span class="text-white nav-link-text ms-1">Mes Publications</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -39,7 +41,7 @@
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-user-friends text-white text-sm opacity-10"></i>
                     </div>
-                    <span class="text-white nav-link-text ms-1">les disparus</span>
+                    <span class="text-white nav-link-text ms-1">les Disparus</span>
                 </a>
             </li>
             <?php endif;if (isset($_SESSION['ass'])) : ?>
@@ -60,7 +62,7 @@
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-search text-white text-sm opacity-10"></i>
                     </div>
-                    <span class="text-white nav-link-text ms-1">Recherch desparu</span>
+                    <span class="text-white nav-link-text ms-1">Recherch Disparu</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -69,7 +71,7 @@
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-envelope text-white text-sm opacity-10"></i>
                     </div>
-                    <span class="text-white nav-link-text ms-1">Missages</span>
+                    <span class="text-white nav-link-text ms-1">Messages</span>
                 </a>
             </li>
             <li class="nav-item mt-3">
