@@ -76,7 +76,6 @@ function Post_action(e,Cinfo) {
         Cinfo[1].user.forEach((e)=>{
             if (cpt<2) {
                 divcomments.append(createcomment(e))
-                
             };
             cpt++
         })
@@ -85,7 +84,6 @@ function Post_action(e,Cinfo) {
             e.prenom=""
             if (cpt<3) {
                 divcomments.append(createcomment(e))
-                
             };
             cpt++
         })
@@ -222,7 +220,7 @@ async function Getpost() {
     try {   
         const response = await fetch(`http://localhost/Project/?action=getposts&debut=${debut}&nb=${nb}`);
         const data = await response.json();
-        
+        console.log(data);
         if (data.length > 0) {
             msg.innerHTML = "";
             for (const e of data) {
@@ -316,7 +314,6 @@ function Getusers(nom) {
     fetch(`http://localhost/Project/?action=recherchuser&nom=${nom}`)
     .then((response)=>{return response.json()})
     .then((data)=>{
-        console.log(data)
         users.innerHTML="";
         if (data.user.length > 0) data.user.forEach(e => {
             user(e,'user').then(res=>{users.append(res)})

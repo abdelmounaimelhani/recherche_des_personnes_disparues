@@ -24,8 +24,7 @@ if (isset($_GET['action'])) {
             case 'addcoment': return CONTROLLER::Addcomment();
             case 'usersuive': return USER_CONTROLLER::usersuive();            
             case 'toggelusersuive': return USER_CONTROLLER::toggleusersuivi();            
-            case 'Accueil': return include_once('./App/Vue/User_Association/Accueil.php');
-            case 'Pubinfo': return CONTROLLER::Publication_info() ; 
+            case 'Accueil': return include_once('./App/Vue/User_Association/Accueil.php'); 
             case 'envoimess': return CONTROLLER::envoimess();
             case 'getDiscussions': return CONTROLLER::getDiscussions();
             case 'get_Message': return CONTROLLER::get_Message();
@@ -46,9 +45,7 @@ if (isset($_GET['action'])) {
     if (isset($_SESSION["user"]))
     {
          
-        switch ($_GET['action']) {
-            case 'Pub': return USER_CONTROLLER::Publication() ;
-            case 'DeletPub': return USER_CONTROLLER::Delet_Pub() ;    
+        switch ($_GET['action']) {  
             case 'Profile': return USER_CONTROLLER::Profile();
             case 'creat_desparu': return CONTROLLER::creat_desparu() ;
             case 'Disparues': return CONTROLLER::Get_disparus();
@@ -61,7 +58,6 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             //association pages
             case 'creat_Indi': return CONTROLLER::creat_desparu();
-            
             case 'info_indiv': return ASSOCIATION_CONTROLLER::Get_Info_Individus() ;
             case 'Individue': return CONTROLLER::Get_disparus();
             case 'Profile': return ASSOCIATION_CONTROLLER::Profile();

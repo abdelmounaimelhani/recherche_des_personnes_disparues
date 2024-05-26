@@ -84,27 +84,6 @@ class CONTROLLER
         }
     }
 
-    public static function Publication_info()
-    {
-        if (isset($_GET["id"])&&isset($_GET['user'])) {
-            $user=$_GET['user'];
-            $id=htmlspecialchars($_GET["id"]);
-            if (isset($_GET["type"])&&isset($_GET['idc'])) {
-                if ($_GET["type"]=="delet") {
-                    USER_MODEL::Suppcomment($_GET['idc'],$_SESSION["HASH"]);
-                }
-                if (USER_MODEL::check_comment($_SESSION["HASH"],$_GET['idc'])->nb > 0) {
-                    USER_MODEL::Suppcomment($_GET['idc']);
-                }
-            }
-            
-            $post=USER_MODEL::Post_User($user,$id);
-            $comments=[USER_MODEL::Commentair_Post_User($id,true),ASSOCIATION_MODEL::Commentair_Post_Ass($id)];
-            if((bool)$post ) include_once 'App/Vue/User_Association/Publication_info.php';
-            else header('location:index.php?action=Pub');
-        }
-    }
-
     public static function recherchuser()
     {
         $nom = $_GET['nom'];
@@ -258,10 +237,7 @@ class CONTROLLER
             ) {
                 $Nom=$_POST["Nom"];$Prenom=$_POST["Prenom"];$Naissance=$_POST["Naissance"];$dentree=$_POST["dentree"];
                 $Villa=$_POST["Villa"];$genner=$_POST["Genner"];
-                if (
-                    !empty($Nom)&&!empty($Prenom)&&!empty($Naissance)&&
-                    !empty($dentree)&&!empty($genner)
-                ) {
+                    
                     $Photo=null;
                     $error=0;
                     if (isset($_FILES["Photo"])) {
@@ -276,18 +252,31 @@ class CONTROLLER
                         if ($error==0 ) {
                             if (isset($_SESSION['user'])) {
                                 USER_MODEL::Creat_disparu($Nom,$Prenom,$dentree,$Naissance,$Photo,$Villa,$_SESSION["HASH"],$genner);
+                                $disc="Avis de disparition
+                                Monsieur/Madame $Nom $Prenom a disparu le $dentree à $Villa. Né(e) le $Naissance. Nous vous prions de nous contacter si vous l'avez vu(e). Merci.";
+                                USER_MODEL::Addpost($_SESSION["HASH"],$disc,$Photo);
                                 header("location:http://localhost/Project/?action=Disparues");
                                 
                             }elseif(isset($_SESSION['ass'])){
+                                $nomass=$_SESSION['info']->nom;
+                                $disc="Avis de découverte
+                                $nomass annonce avoir retrouvé ";
+                                if ($Nom!="" || $Prenom!="") $disc.="que M/Mme $Nom $Prenom, ";
+                                else $disc.="la personne sur la photo, ";
+                                $disc .="le $dentree à $Villa.";
+                                if($Naissance != "") $disc.=" Né(e) le $Naissance";
+                                $disc.=" Nous invitons toute personne connaissant sa famille à nous contacter. Merci.";
+                                USER_MODEL::Addpost($_SESSION["HASH"],$disc,$Photo);
                                 ASSOCIATION_MODEL::Creat_indiv($Nom,$Prenom,$dentree,$Naissance,$Photo,$Villa,$_SESSION["HASH"],$genner);
                                 header("location:http://localhost/Project/?action=Individue");
                             }
                         }
-                }
+                
             }else $error=4;
         }
         include_once "./App/Vue/User_Association/Creat_disparu.php";
     }
+
     public static function Modifier_desp(){
         if (isset($_GET["IDD"])) {
             $Disp=ASSOCIATION_MODEL::info_indiv($_GET["IDD"],$_SESSION["HASH"]);
@@ -298,6 +287,7 @@ class CONTROLLER
             }else header("location:http://localhost/Project");
         }else header("location:http://localhost/Project");
     }
+
     public static function Edit_Info_desparu()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
