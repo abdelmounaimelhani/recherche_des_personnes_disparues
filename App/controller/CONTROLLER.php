@@ -386,6 +386,9 @@ class CONTROLLER
             if (isset($_POST["id"])&&isset($_POST["hash"])) {
                 $Disp=ASSOCIATION_MODEL::info_indiv($_POST["id"],$_POST["hash"]);
                 echo json_encode(["res"=>$Disp]);
+            }elseif(isset($_POST["id"])){
+                $Disp=ASSOCIATION_MODEL::info_indiv($_POST["id"]);
+                echo json_encode(["res"=>$Disp]);
             }else echo json_encode(["res"=>1]);
         }
     }

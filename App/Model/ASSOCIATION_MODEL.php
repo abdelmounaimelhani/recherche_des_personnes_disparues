@@ -96,11 +96,19 @@ class ASSOCIATION_MODEL
         return $res;
     }
     
-    public static function info_indiv($idind,$HASH){
+    public static function info_indiv($idind,$HASH=null){
         $conn=Connexion::Connexion();
-        $st=$conn->prepare("SELECT * FROM disparu WHERE id=:id AND `HASH`=:HASHID");
-        $st->bindParam(':id', $idind);
-        $st->bindParam(':HASHID', $HASH);
+        if ($HASH!=null) {
+            $st=$conn->prepare("SELECT * FROM disparu WHERE id=:id AND `HASH`=:HASHID");
+            $st->bindParam(':id', $idind);
+            $st->bindParam(':HASHID', $HASH);
+        }else {
+            $st=$conn->prepare("SELECT D.nom,D.prenom,D.date_N,D.Gennre,D.photo,D.ville,
+                                A.nom as 'Nomass',A.email,A.tele,A.ville,A.adress
+                                FROM disparu D,association A, ass_hash AH
+                                WHERE D.`HASH`=AH.HASH_ID AND AH.id_ASS=A.id AND D.id=:id ");
+            $st->bindParam(':id', $idind);
+        }
         $st->execute();
         $res = $st->fetch(PDO::FETCH_OBJ);
         return $res;

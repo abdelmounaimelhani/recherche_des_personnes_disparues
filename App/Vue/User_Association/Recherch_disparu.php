@@ -2,6 +2,62 @@
     $title='Rechech_disparue';
 
 ?>
+<style>
+    .loaderdisp {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: #111 #111 transparent transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loaderdisp::after,
+.loaderdisp::before {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent transparent #5e72e4 #5e72e4;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+.loaderdisp::before {
+  width: 10px;
+  height: 10px;
+  border-color: #111 #111 transparent transparent;
+  animation: rotation 1.5s linear infinite;
+}
+    
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+    
+</style>
 <div class="row">
     <?php if(isset($_GET["IDD"]) && isset($Disp)){ ?>
     <div class="card">
@@ -48,7 +104,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <a href="#" class="btn btn-github">Recherch Avec Image</a>
+            <button id="BtnRES" class="btn btn-github">Recherch Avec Image </button>
         </div>
     </div>
     <?php }else{ ?>
@@ -121,10 +177,10 @@
 </div>
 <?php if(isset($data)) : ?>
 <div class="row">
-    <div class="col-12 mt-4">
-        <div class="card">
+    <div class="col-12 mt-4" >
+        <div class="card" id="Res">
             <div class="card-header pb-0 px-3">
-                <h6 class="mb-0">Résultats de la recherche pour personnes disparues</h6>
+                <h6 class="mb-0 d-flex align-content-center" id="titre">Résultats de la recherche pour personnes disparues </h6>
             </div>
             <?php
       if(count($data)>0) {
@@ -231,8 +287,7 @@
             <div class="card-body pt-4 p-3">
                 <p class="text-center">Il n'y a aucun résultat pour ces données</p>
             </div>
-            <?php }
-endif ?>
+            <?php }endif ?>
         </div>
     </div>
 </div>
