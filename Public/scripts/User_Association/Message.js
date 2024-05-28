@@ -14,6 +14,7 @@ let usern=document.getElementById("username")
 
 
 
+mesg_err.style.width="100%"
 
 
 async function  getDiscussions(){

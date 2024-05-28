@@ -35,19 +35,16 @@ def compare_faces(reference_path, image_paths):
                 image2 = cv2.imread(full_image_path)
                 if image2 is None:
                     continue
-
                 rgbimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2RGB)
                 img_encodings2 = face_recognition.face_encodings(rgbimage2)
                 if not img_encodings2:
                     continue
-
                 for encoding1 in img_encodings1:
                     for encoding2 in img_encodings2:
                         similarity_score = face_recognition.face_distance([encoding1], encoding2)[0]
                         if similarity_score <= 0.6:
                             similar_images.append(image_path[0])
                             break
-
         return jsonify(similar_images)
     except Exception as e:
         return jsonify({'error': str(e)}), 500

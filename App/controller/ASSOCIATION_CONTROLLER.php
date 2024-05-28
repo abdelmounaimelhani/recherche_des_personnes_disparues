@@ -60,9 +60,9 @@ class ASSOCIATION_CONTROLLER
     {
         if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["hash"])) {
             $ass=ASSOCIATION_MODEL::get_ass($_GET["hash"]);
+            if (!$ass) USER_CONTROLLER::Profile();
         }elseif(isset($_SESSION["ass"]) ){
             $id=$_SESSION['ass'];
-            
             if (isset($_POST["Modifier"])) {
     
                 if (

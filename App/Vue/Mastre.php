@@ -15,49 +15,10 @@
     <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
     <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
     <link rel="stylesheet" href="Public/styles/User_Association/Mster.css">
-    <!--
-  <style>
-      .loader {
-      height: 15px;
-      aspect-ratio: 4;
-      --_g: no-repeat radial-gradient(farthest-side,#000 90%,#0000);
-      background: 
-        var(--_g) left, 
-        var(--_g) right;
-      background-size: 25% 100%;
-      display: grid;
-    }
-    .loader:before,
-    .loader:after {
-      content: "";
-      height: inherit;
-      aspect-ratio: 1;
-      grid-area: 1/1;
-      margin: auto;
-      border-radius: 50%;
-      transform-origin: -100% 50%;
-      background: #000;
-      animation: l49 1s infinite linear;
-    }
-    .loader:after {
-      transform-origin: 200% 50%;
-      --s:-1;
-      animation-delay: -.5s;
-    }
-
-    @keyframes l49 {
-      58%,
-      100% {transform: rotate(calc(var(--s,1)*1turn))}
-    }
-    </style>
-    -->
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
-
-    <div class="position-fixed d-flex justify-content-center vh-100 col-12 align-items-center">
-        <div class="loader"></div>
-    </div>
+    
 
     <?php include_once './App/Vue/Nav.php' ?>
     <main class="main-content position-relative border-radius-lg ">
@@ -87,6 +48,9 @@
         </nav>
 
         <div class="container-fluid py-4">
+        <div class="loader" style="display: none;">
+            <div class="loaderSpan" ></div>
+        </div>
             <?= $content ?>
         </div>
     </main>

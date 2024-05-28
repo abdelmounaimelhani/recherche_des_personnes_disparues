@@ -20,6 +20,7 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'recherchuser': return CONTROLLER::recherchuser();
             case 'getposts': return CONTROLLER::Posts();
+            case 'getposts_Dec': return CONTROLLER::getposts_Dec();
             case 'Messge': return CONTROLLER::Message();
             case 'addcoment': return CONTROLLER::Addcomment();
             case 'usersuive': return USER_CONTROLLER::usersuive();            

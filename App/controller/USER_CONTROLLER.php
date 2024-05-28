@@ -46,10 +46,11 @@ class USER_CONTROLLER{
 
     public static function Profile()
     {
-        
         if (isset($_GET['hash'])) {
             $id=$_GET['hash'];
             $user=USER_MODEL::Infouser($id);
+            if (!$user) ASSOCIATION_CONTROLLER::Profile();
+            
         }else{
             $id=$_SESSION['HASH'];
             $user=USER_MODEL::Infouser($id);
@@ -98,9 +99,7 @@ class USER_CONTROLLER{
                     }else echo "<script>alert('remplier tout les chompe.')</script>";
                 }else echo "<script>alert('remplier tout les chompe.')</script>";
             }
-        }
-        
-        
+        }        
         $user=USER_MODEL::Infouser($id);
         if ((bool) $user) {
             include_once "App/Vue/Users/Profile.php";

@@ -118,9 +118,16 @@ async function Recherch(indi) {
     document.getElementById("Res").innerHTML+=`<div class="card-body pt-4 p-3">
     <p class="text-center">Il n'y a aucun résultat pour ces données</p>
     </div>`
-    document.getElementById("titre").innerHTML="Résultats de la recherche pour personnes disparues"
+    document.getElementById("titre").innerHTML="Résultats de recherche"
     })
-    .catch(error => {console.error('Error:', error);});
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("Res").innerHTML+=`<div class="card-body pt-4 p-3">
+            <p class="text-center">Oups ! Il semble qu'un problème soit survenu. Veuillez vérifier votre connexion et réessayer plus tard.</p>
+        </div>`
+        document.getElementById("titre").innerHTML="Résultats de recherche"
+        
+    });
 }
 
 

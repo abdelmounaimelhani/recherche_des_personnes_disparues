@@ -22,6 +22,21 @@ class ASSOCIATION_MODEL
         return $res;
         
     }
+    public static function Get_posts($debut, $fin) {
+        $st = Connexion::Connexion()->prepare(
+            "SELECT p.* ,a.nom ,a.photo as 'userphoto' 
+            FROM publication p ,association a ,ass_hash ah 
+            WHERE p.HASH=ah.HASH_ID AND ah.id_ASS=a.id
+            ORDER BY datepub DESC LIMIT :debut, :fin"
+            );
+
+        $st->bindParam(':debut', $debut, PDO::PARAM_INT);
+        $st->bindParam(':fin', $fin, PDO::PARAM_INT);
+        $st->execute();
+        $res = $st->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
+
     public static function Editeass($nom,$email,$Adress,$tele,$Ville){
         //Modifier les informations d'un utilisateur.
         $st = Connexion::Connexion()->prepare("UPDATE association SET nom = ? ,adress=? ,email =? ,tele=? ,Ville=? WHERE id = ? ;");

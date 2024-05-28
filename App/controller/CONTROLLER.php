@@ -61,6 +61,14 @@ class CONTROLLER
         $post=USER_MODEL::Get_posts($debut,$fin);
         echo json_encode($post);
     }
+    public static function getposts_Dec()
+    {
+        //renvoi 10 post
+        $debut=$_GET["debut"];
+        $fin=$_GET["nb"];
+        $post=ASSOCIATION_MODEL::Get_posts($debut,$fin);
+        echo json_encode($post);
+    }
 
     public static function Addcomment(){
         if ($_SERVER["REQUEST_METHOD"] == "POST"){

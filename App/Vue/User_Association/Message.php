@@ -46,7 +46,7 @@
         </div>
 
         <div class="col-8 border-radius-top-end border-radius-bottom-end bg-white" id="chat">
-            <div class="d-flex align-items-center p-1 bg-dark d-none" id="infochat">
+            <div class="d-flex align-items-center p-1 bg-gradient-faded-primary d-none" id="infochat">
                 <img id="userimg" class="avatar m-2">
                 <a id="userlink" href=""><span id="username" class="text-white link-info"></span></a>
             </div>
@@ -55,7 +55,7 @@
             <div class="height-400 mt-3 overflow-auto" id="Messages">
 
             </div>
-            <div class="mt-2" id="form_message">
+            <div class="mt-2 ms-5" id="form_message">
 
             </div>
 

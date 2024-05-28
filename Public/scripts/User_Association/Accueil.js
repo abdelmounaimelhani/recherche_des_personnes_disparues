@@ -11,6 +11,11 @@ let userID=document.getElementById('userid').value
 let usernom=document.getElementById('usernom').value
 btnpost.style.cursor='pointer'
  
+function Dloader(){
+    setTimeout(()=>{
+        diveloader.style.display='none'
+    },300)
+}
 
 function Post_img(ph){
     if (ph!=null) {
@@ -102,13 +107,13 @@ function Post_action(e,Cinfo) {
     let idp=e.id
 
     form.addEventListener("submit",(e)=>{
-        
+    
         e.preventDefault()
         let commentdata=new FormData()
         commentdata.append("idp",idp)
         commentdata.append("comment",input.value.trim())
         if (input.value.trim()!="") {
-            diveloader.style.display='block'
+            diveloader.style.display='flex'
             fetch("http://localhost/Project/?action=addcoment",{method:'POST',body:commentdata})
             .then(response=>{return response.json()})
             .then(data=>{
@@ -126,7 +131,10 @@ function Post_action(e,Cinfo) {
                     span.innerHTML=parseInt(span.innerText)+1
                     input.value=""
                 }
-                diveloader.style.display='none'
+                Dloader()
+            }).catch((error)=>{
+                Dloader()
+                console.log(error);
             })
         }
     })
@@ -164,7 +172,10 @@ function Post(e,commentinfo) {
     let a=document.createElement("a")
     a.classList.add("text-xs")
     a.href=`http://localhost/Project/?action=Profile_user&ID=${e.HASH}`
-    a.innerText = e.nom + " " + e.prenom
+    let nom=e.nom
+    let prenom=""
+    if(e.prenom != undefined) prenom=e.prenom
+    a.innerText = e.nom + " " + prenom
 
     let dateP=document.createElement("p")
     dateP.classList.add("text-xxs")
@@ -215,10 +226,15 @@ async function Getcomment(id) {
     return {nbcomment:nbc,Comments:comment}
 }
 
-async function Getpost() {
-    diveloader.style.display='block'
-    try {   
-        const response = await fetch(`http://localhost/Project/?action=getposts&debut=${debut}&nb=${nb}`);
+async function Getpost(type=null) {
+    diveloader.style.display='flex'
+    try {  
+        let response = ""
+        if (type==null) {
+            response = await fetch(`http://localhost/Project/?action=getposts&debut=${debut}&nb=${nb}`);
+        }else{
+            response = await fetch(`http://localhost/Project/?action=getposts_Dec&debut=${debut}&nb=${nb}`);
+        }
         const data = await response.json();
         console.log(data);
         if (data.length > 0) {
@@ -238,12 +254,12 @@ async function Getpost() {
             msg.innerHTML = "Aucune des Postes";
             btnpost.style.display='none'
         }
-        diveloader.style.display='none'
-    } catch (error) {console.error(error);}
+        Dloader()
+    } catch (error) {console.error(error);Dloader()}
 }
 
 Getpost();
-btnpost.addEventListener('click',()=>{Getpost();})
+
 
 function toggelimgsuive(icon,res) {
     if(res==0)icon.src='Public/imgs/add-user.png'
@@ -251,7 +267,7 @@ function toggelimgsuive(icon,res) {
 }
 
 function togglesuive(HASH,icon,t) {
-    diveloader.style.display='block'
+    diveloader.style.display='flex'
     let data = new FormData()
     data.append('id',HASH)
     data.append('type',t)
@@ -259,7 +275,10 @@ function togglesuive(HASH,icon,t) {
     .then(response=>{return response.json()})
     .then(res=>{
         toggelimgsuive(icon,res.res)
-        diveloader.style.display='none'
+        Dloader()
+    }).catch(error=>{
+        Dloader()
+        console.log(error);
     })
 }
 async function user(e,type) {
@@ -310,7 +329,7 @@ async function user(e,type) {
 }
 
 function Getusers(nom) {
-    diveloader.style.display='block'
+    diveloader.style.display='flex'
     fetch(`http://localhost/Project/?action=recherchuser&nom=${nom}`)
     .then((response)=>{return response.json()})
     .then((data)=>{
@@ -322,11 +341,40 @@ function Getusers(nom) {
             user(e,'ass').then(res=>{users.append(res)})
         }) 
         if(data.user.length == 0 && data.asso.length == 0) users.innerHTML = "<span class='user-res'>Aucune des resultat</span>";
-        diveloader.style.display='none'
+        Dloader()
+    }).catch(error=>{
+        Dloader()
+        console.log(error);
     })
 }
 
 Getusers("")
+const ADis=document.getElementById("ADis")
+const ADec=document.getElementById("ADec")
+let type=""
+ADis.addEventListener("click",(e)=>{
+    type="DI"
+    debut = 0 ; nb = 10;
+    e.target.classList.toggle('btn-behance')
+    ADec.classList.toggle('btn-behance')
+    Posts.innerHTML=""
+    Getpost();
+})
+
+ADec.addEventListener("click",(e)=>{
+    type="DE"
+    debut = 0 ; nb = 10;
+    e.target.classList.toggle('btn-behance')
+    ADis.classList.toggle('btn-behance')
+    Posts.innerHTML=""
+    Getpost(true);
+})
+
+btnpost.addEventListener('click',()=>{
+    if (type=="DI") Getpost()
+    else if(type=="DE") Getpost(true)
+})
+
 inputrch.addEventListener('keyup',(e)=>{
     e.preventDefault();
     let nom = inputrch.value;
