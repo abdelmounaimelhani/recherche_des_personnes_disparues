@@ -406,4 +406,10 @@ class CONTROLLER
             }
         }
     }
+
+    public static function Pubinfo(){
+        $id=$_GET["id"];
+        $commente = USER_MODEL::Commentair_Post_User($id,true);
+        include_once "./App/Vue/User_Association/pubinfo.php";
+    }
 }   

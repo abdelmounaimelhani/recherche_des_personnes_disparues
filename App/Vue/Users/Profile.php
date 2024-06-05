@@ -25,7 +25,7 @@ $title='Profile';
                         <li class="nav-item">
                             <a id="IN"
                                 class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center "
-                                data-bs-toggle="tab" href="http://localhost/Project/?action=Profile&hash=<?=$_GET["hash"]?>" role="tab" aria-selected="true">
+                                data-bs-toggle="tab" <?php if(isset($_GET["hash"])): ?> href="http://localhost/Project/?action=Profile&hash=<?=$_GET["hash"]?>  <?php endif ?>" role="tab" aria-selected="true">
                                 <i class="ni ni-single-02"></i>
                                 <span class="ms-2">Info</span>
                             </a>

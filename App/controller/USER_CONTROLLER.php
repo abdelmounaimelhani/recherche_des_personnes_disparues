@@ -1,4 +1,5 @@
 <?php
+
 class USER_CONTROLLER{
     public static function creat_user()
     {

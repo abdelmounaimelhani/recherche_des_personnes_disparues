@@ -39,7 +39,7 @@ if (isset($_GET['action'])) {
             case 'delet_Dispa':return CONTROLLER::Delet_desparu();
             case 'get_info_disp':return CONTROLLER::get_info_disp();
             case 'get_info_indi':return CONTROLLER::get_info_Di();
-            
+            case 'Pubinfo':return CONTROLLER::Pubinfo();
             case 'test': return include_once ("./test.php");
         }
     }

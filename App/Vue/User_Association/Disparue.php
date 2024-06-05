@@ -74,7 +74,13 @@
                                         title="Edit Disparue">
                                         <i class="fas fa-edit text-sm opacity-10"></i> Modifier
                                     </a>
-
+                                </td>
+                                <td class="align-middle">
+                                    <a href="http://localhost/Project/?action=Pubinfo&IDD=<?=$indi->id?>"
+                                        class="text-dark font-weight-bold text-xs d-block text-center"
+                                        title="Edit Disparue">
+                                        <i class="fas fa-list text-sm opacity-10"></i> Annonce
+                                    </a>
                                 </td>
                                 <td class="align-middle">
                                     <a href="http://localhost/Project/?action=Recherch_desparu&IDD=<?=$indi->id?>&hash=<?=$_SESSION["HASH"]?>"

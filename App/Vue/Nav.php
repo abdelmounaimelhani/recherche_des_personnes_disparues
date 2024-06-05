@@ -26,15 +26,7 @@
             </li>
 
             <?php if (isset($_SESSION['user'])) :?>
-            <li class="nav-item">
-                <a class="nav-link " href="?action=Pub">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fas fa-list text-white text-sm opacity-10"></i>
-                    </div>
-                    <span class="text-white nav-link-text ms-1">Mes Publications</span>
-                </a>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link " href="?action=Disparues">
                     <div
