@@ -35,16 +35,16 @@ function createcomment(comment) {
             if (userID==comment.id_user) {userC.href="http://localhost/Project/?action=Editinfo"}
             else userC.href=comment.HASH; //href
             userC.innerHTML=comment.nom+' '+comment.prenom
-            userC.classList.add("text-s","text-dark")
+            userC.classList.add("text-xs","text-dark")
 
             let dateC=document.createElement('p')
             dateC.innerText=comment.date_comment
-            dateC.classList.add("text-xxs","text-dark")
+            dateC.classList.add("text-xxs","text-dark","m-0")
         commentinfo.append(userC)
         commentinfo.append(dateC)
         let disc=document.createElement('p')
         disc.innerText=comentdesc
-        disc.classList.add("text-s","mt-0","ps-2")
+        disc.classList.add("text-xs","mt-0","ps-4","mb-2","text-dark")
         if (comentdesc.length>160) {
             disc.style.cursor='pointer'
             disc.style.height="100px"
@@ -171,7 +171,7 @@ function Post(e,commentinfo) {
 
     let a=document.createElement("a")
     a.classList.add("text-xs")
-    a.href=`http://localhost/Project/?action=Profile_user&ID=${e.HASH}`
+    a.href=`http://localhost/Project/?action=Profile&ID=${e.HASH}`
     let nom=e.nom
     let prenom=""
     if(e.prenom != undefined) prenom=e.prenom

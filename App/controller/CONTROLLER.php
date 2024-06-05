@@ -409,7 +409,22 @@ class CONTROLLER
 
     public static function Pubinfo(){
         $id=$_GET["id"];
+        if (isset($_GET["user"])) {
+            $hash=$_GET["user"];
+        }else{
+            $hash=$_SESSION["HASH"];
+        }
+        $nom="";
+        $prenom="";
+        $photo="";
         $commente = USER_MODEL::Commentair_Post_User($id,true);
+        $user=USER_MODEL::get_user($hash);
+        if (!$user) {
+            $user=ASSOCIATION_MODEL::get_ass($hash);
+        }
+        $nom=$user->nom;
+        $photo=$user->photo;
+        $post = USER_MODEL::Post_User($hash,$id);
         include_once "./App/Vue/User_Association/pubinfo.php";
     }
 }   

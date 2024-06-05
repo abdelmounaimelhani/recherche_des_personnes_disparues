@@ -358,7 +358,7 @@ class USER_MODEL{
 
     public static function get_user($HASH){
         $st=Connexion::Connexion()->prepare(
-            "SELECT concat(u.nom,'',u.prenom) AS 'nom', u.photo ,us.HASH_ID FROM user_hash us,usertable u
+            "SELECT concat(u.nom,' ',u.prenom) AS 'nom', u.photo ,us.HASH_ID FROM user_hash us,usertable u
             WHERE us.`id-user`=u.id AND us.HASH_ID=?
             ");
         $st->bindParam(1,$HASH,PDO::PARAM_STR);

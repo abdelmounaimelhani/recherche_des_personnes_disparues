@@ -76,7 +76,7 @@
                                     </a>
                                 </td>
                                 <td class="align-middle">
-                                    <a href="http://localhost/Project/?action=Pubinfo&IDD=<?=$indi->id?>"
+                                    <a href="http://localhost/Project/?action=Pubinfo&id=<?=$indi->id?>"
                                         class="text-dark font-weight-bold text-xs d-block text-center"
                                         title="Edit Disparue">
                                         <i class="fas fa-list text-sm opacity-10"></i> Annonce
