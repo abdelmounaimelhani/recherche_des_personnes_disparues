@@ -157,9 +157,9 @@ class ASSOCIATION_MODEL
         $st->execute();
     }
 
-    public static function delet_indiv($id,$asso){
+    public static function delet_Disp($id,$asso){
         $conn=Connexion::Connexion();
-        $st=$conn->prepare("DELETE FROM `individus` WHERE `id`=:id AND Asso=:Asso");
+        $st=$conn->prepare("DELETE FROM `disparu` WHERE `id`=:id AND disparu.HASH=:Asso");
         $st->bindParam(':id', $id);
         $st->bindParam(':Asso', $asso);
         return $st->execute();

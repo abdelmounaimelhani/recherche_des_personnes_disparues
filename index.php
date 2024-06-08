@@ -36,7 +36,6 @@ if (isset($_GET['action'])) {
             case "Recherch_desparu": return CONTROLLER::Recherch_desparu();
             case 'Modifier_desp':return CONTROLLER::Modifier_desp();
             case 'Edit_Info_desparu':return CONTROLLER::Edit_Info_desparu();
-            case 'delet_Dispa':return CONTROLLER::Delet_desparu();
             case 'get_info_disp':return CONTROLLER::get_info_disp();
             case 'get_info_indi':return CONTROLLER::get_info_Di();
             case 'Pubinfo':return CONTROLLER::Pubinfo();

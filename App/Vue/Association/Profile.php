@@ -22,13 +22,6 @@ $title='Profile';
             <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                        <li class="nav-item">
-                            <a id="IN" class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center "
-                            <?php if (!isset($_GET["hash"])) echo 'data-bs-toggle="tab"' ?> href="<?php echo (!isset($_GET['hash'])) ? "javascript:;" : "?action=Profile&hash=$_GET[hash]"; ?>" role="tab" aria-selected="true">
-                                <i class="ni ni-app"></i>
-                                <span class="ms-2">Info</span>
-                            </a>
-                        </li>
                         <?php  if(isset($_GET['hash'])){?> 
                         <li class="nav-item">
                             <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " href="?action=Messge&id=<?=$_GET["hash"]?>">
@@ -37,12 +30,19 @@ $title='Profile';
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " href="?action=Messge&id=<?=$_GET["hash"]?>">
+                            <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " href="?action=Individue&ASS=true&hash=<?=$_GET["hash"]?>">
                                 <i class="ni ni-bullet-list-67"></i>
-                                <span class="ms-2">Publication</span>
+                                <span class="ms-2">Individus</span>
                             </a>
                         </li>
                         <?php }else{?>
+                            <li class="nav-item">
+                            <a id="IN" class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center "
+                            <?php if (!isset($_GET["hash"])) echo 'data-bs-toggle="tab"' ?> href="<?php echo (!isset($_GET['hash'])) ? "javascript:;" : "?action=Profile&hash=$_GET[hash]"; ?>" role="tab" aria-selected="true">
+                                <i class="ni ni-app"></i>
+                                <span class="ms-2">Info</span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a id="MD" class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "
                                 data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
@@ -117,7 +117,7 @@ $title='Profile';
                     <th>Date de Naissanse</th>
                     <th>Date de Entre a l Ass</th>
                 </tr>
-            </table>
+            </table> 
         <?php } ?>
     </div>
     <?php if(!isset($_GET['hash'])){?>

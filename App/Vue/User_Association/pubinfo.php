@@ -21,18 +21,17 @@
             <?php if ($commente) :?>
             <?php foreach($commente as $C): ?>
             <div>
-                <div class="card-header p-3 ">
-                    <div class="d-flex justify-content-start  align-items-center">
-                        <img src="Files/desparus/050624100035_66601b23362e0.jpg" class="avatar" alt="">
-                        <div class="ms-2">
-                            <a href="" class="text-xs"><?=$C->nom." ".$C->prenom?> </a>
-                            <p class="text-xxs"><?=$C->date_comment?></p>
+                <div class="card-header p-0 h-50">
+                    <div class="d-flex justify-content-start m-0 align-items-center">
+                        <div class=" ms-2">
+                            <a href="?action=Profile&hash=<?=$C->HASH?>" class="text-xs"><?=$C->nom?> </a>
+                            <p class="text-xxs text-lighter"><?=$C->date_comment?></p>
                         </div>
                     </div>
                 </div>
-                <p class="max-height-100 overflow-auto ps-3 text-sm" ><?=$C->discription?></p>
+                <p class="max-height-100 overflow-auto ps-3 text-sm m-0 text-dark" ><?=$C->discription?></p>
             </div>
-            <hr>
+            
             <?php endforeach ?>
             <?php endif;if (!$commente): ?>
                 <div class="text-center">

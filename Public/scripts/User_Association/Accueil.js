@@ -171,7 +171,7 @@ function Post(e,commentinfo) {
 
     let a=document.createElement("a")
     a.classList.add("text-xs")
-    a.href=`http://localhost/Project/?action=Profile&ID=${e.HASH}`
+    a.href=`http://localhost/Project/?action=Profile&hash=${e.HASH}`
     let nom=e.nom
     let prenom=""
     if(e.prenom != undefined) prenom=e.prenom
@@ -252,7 +252,7 @@ async function Getpost(type=null) {
             nb += 10;
         } else {
             msg.innerHTML = "Aucune des Postes";
-            btnpost.style.display='none'
+            btnpost.style.display="none"
         }
         Dloader()
     } catch (error) {console.error(error);Dloader()}
@@ -351,10 +351,11 @@ function Getusers(nom) {
 Getusers("")
 const ADis=document.getElementById("ADis")
 const ADec=document.getElementById("ADec")
-let type=""
+let type="DI"
 ADis.addEventListener("click",(e)=>{
     type="DI"
     debut = 0 ; nb = 10;
+    btnpost.style.display=""
     e.target.classList.toggle('btn-behance')
     ADec.classList.toggle('btn-behance')
     Posts.innerHTML=""
@@ -364,6 +365,7 @@ ADis.addEventListener("click",(e)=>{
 ADec.addEventListener("click",(e)=>{
     type="DE"
     debut = 0 ; nb = 10;
+    btnpost.style.display=""
     e.target.classList.toggle('btn-behance')
     ADis.classList.toggle('btn-behance')
     Posts.innerHTML=""
@@ -371,6 +373,7 @@ ADec.addEventListener("click",(e)=>{
 })
 
 btnpost.addEventListener('click',()=>{
+    console.log(type);
     if (type=="DI") Getpost()
     else if(type=="DE") Getpost(true)
 })

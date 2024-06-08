@@ -180,9 +180,14 @@ class USER_MODEL{
 
     public static function Commentair_Post_User($idP,$nbc=null){
         $st2 = Connexion::Connexion()->prepare(
-            "SELECT p.*,u.nom,u.prenom FROM publication_comment p , usertable u ,user_hash uh
-            WHERE u.id=uh.`id-user` AND uh.HASH_ID=p.`HASH` AND id_publication = ?
-            ORDER BY p.date_comment DESC"
+            "SELECT DISTINCT
+            case 
+                when uh.HASH_ID=p.`HASH` then CONCAT(u.nom,' ',u.prenom)
+                when ah.HASH_ID=p.`HASH` then ass.nom
+            END AS 'nom' , p.*
+            FROM publication_comment p , usertable u ,user_hash uh,association ass ,ass_hash ah
+            WHERE (u.id=uh.`id-user` AND uh.HASH_ID=p.`HASH`) OR (ass.id=ah.id_ASS AND ah.HASH_ID=p.`HASH`)
+            AND id_publication = ?"
         );
         $st2->bindParam(1, $idP);
         $st2->execute();

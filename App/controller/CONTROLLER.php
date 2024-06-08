@@ -190,20 +190,47 @@ class CONTROLLER
     }
 
     public static function Get_disparus()
+    
     {   
         $HASH=$_SESSION["HASH"]; 
-        $msg="";
-        if (isset($_SESSION["ass"])) {
-            $RES=ASSOCIATION_MODEL::get_indvs($HASH);
-            $title = 'Individus';
-            $msg="Il n'y a pas d'individus";
-            $link="?action=creat_Indi";
-        }elseif(isset($_SESSION["user"])){
-            $RES=USER_MODEL::get_Dispar($HASH);
-            $title = 'Disparues';
-            $msg ="Il n'y a pas des disparues";
-            $link ="?action=creat_desparu";
+        if((isset($_GET["ASS"]) || isset($_GET["USER"])) && isset($_GET["hash"])){
+            $HASH=$_GET["hash"];
+            if (isset($_GET["ASS"])) {
+                $RES=ASSOCIATION_MODEL::get_indvs($HASH);
+                $title = 'Individus';
+                $msg="Il n'y a pas d'individus";
+                $link="?action=creat_Indi";
+            }elseif(isset($_GET["USER"])){
+                $RES=USER_MODEL::get_Dispar($HASH);
+                $title = 'Disparues';
+                $msg ="Il n'y a pas des disparues";
+                $link ="?action=creat_desparu";
+            }
+        }else{
+            if (isset($_GET["id"])) {
+                $id=$_GET["id"];
+                ASSOCIATION_MODEL::delet_Disp($id,$_SESSION['HASH']);
+                if (isset($_SESSION['user'])) {
+                    header("location:http://localhost/Project/?action=Disparues");
+                }else{
+                    header("location:http://localhost/Project/?action=Individue");
+                }
+            }
+            
+            $msg="";
+            if (isset($_SESSION["ass"])) {
+                $RES=ASSOCIATION_MODEL::get_indvs($HASH);
+                $title = 'Individus';
+                $msg="Il n'y a pas d'individus";
+                $link="?action=creat_Indi";
+            }elseif(isset($_SESSION["user"])){
+                $RES=USER_MODEL::get_Dispar($HASH);
+                $title = 'Disparues';
+                $msg ="Il n'y a pas des disparues";
+                $link ="?action=creat_desparu";
+            }
         }
+        
         
         include_once "./App/Vue/User_Association/Disparue.php";
     }
@@ -319,25 +346,6 @@ class CONTROLLER
         }
     }
     
-    public static function Delet_desparu()
-    {
-        if ($_SERVER['REQUEST_METHOD']=="POST") {
-            if (isset($_POST['idin'])) {
-                if (!empty($_POST['idin']) && is_numeric($_POST['idin'])) {
-                    $id=$_POST["idin"];
-                    $asso=$_SESSION["ass"];
-                    $res=ASSOCIATION_MODEL::info_indiv($id,$asso);
-                    if ((bool) $res) {
-                        ASSOCIATION_MODEL::delet_indiv($id,$asso);
-                        $res=ASSOCIATION_MODEL::info_indiv($id,$asso);
-                        if (!(bool) $res) {
-                            echo json_encode(["code"=>0]);
-                        }else echo json_encode(["code"=>1]);
-                    }else echo json_encode(["code"=>2]);
-                }else echo json_encode(["code"=>1]);
-            }else echo json_encode(["code"=>1]);
-        }else header("location:http://localhost/Project/?action=Accueil");
-    }
     
     public static function Recherch_desparu() {
         $tablekey=[];

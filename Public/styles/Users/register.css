@@ -47,7 +47,7 @@ body{
 .form-group{
     display: flex;
     justify-content: space-evenly;
-    margin: 35px 0;
+    margin: 20px 0;
     align-items: center;
 }
 .form-group>label{

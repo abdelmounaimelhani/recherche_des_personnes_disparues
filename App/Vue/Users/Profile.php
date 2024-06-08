@@ -22,30 +22,32 @@ $title='Profile';
             <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                        <li class="nav-item">
-                            <a id="IN"
-                                class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center "
-                                data-bs-toggle="tab" <?php if(isset($_GET["hash"])): ?> href="http://localhost/Project/?action=Profile&hash=<?=$_GET["hash"]?>  <?php endif ?>" role="tab" aria-selected="true">
-                                <i class="ni ni-single-02"></i>
-                                <span class="ms-2">Info</span>
-                            </a>
-                        </li>
+                        
                         <?php  if(isset($_GET["hash"])){?>
                         <li class="nav-item">
                             <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "
-                                data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                            href="?action=Messge&id=<?=$_GET["hash"]?>"
+                            >
                                 <i class="ni ni-email-83"></i>
                                 <span class="ms-2">Messages</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "
-                                data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                                href="?action=Disparues&USER=true&hash=<?=$_GET["hash"]?>">
                                 <i class="ni ni-bullet-list-67"></i>
-                                <span class="ms-2">Publication</span>
+                                <span class="ms-2">Disparues</span>
                             </a>
                         </li>
                         <?php }else{?>
+                            <li class="nav-item">
+                            <a id="IN"
+                                class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center "
+                                data-bs-toggle="tab" role="tab" aria-selected="true">
+                                <i class="ni ni-single-02"></i>
+                                <span class="ms-2">Info</span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a id="MD" class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "
                                 data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
