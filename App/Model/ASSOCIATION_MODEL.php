@@ -148,16 +148,16 @@ class ASSOCIATION_MODEL
 
     }
 
-    public static function Update_img($photo,$id,$Asso){
+    public static function Update_img($photo,$id,$HASH){
         $conn=Connexion::Connexion();
-        $sql = "UPDATE individus 
+        $sql = "UPDATE disparu 
                 SET  photo = :photo
-                WHERE id = :id AND Asso = :Asso";
+                WHERE id = :id AND `HASH` = :HASH";
         $st = $conn->prepare($sql);
         $st->bindParam(':photo', $photo);
         $st->bindParam(':id', $id);
-        $st->bindParam(':Asso', $Asso);
-        $st->execute();
+        $st->bindParam(':HASH', $HASH);
+        return $st->execute();
     }
 
     public static function delet_Disp($id,$asso){

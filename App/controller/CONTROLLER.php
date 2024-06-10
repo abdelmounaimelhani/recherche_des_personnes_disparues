@@ -209,11 +209,17 @@ class CONTROLLER
         }else{
             if (isset($_GET["id"])) {
                 $id=$_GET["id"];
-                ASSOCIATION_MODEL::delet_Disp($id,$_SESSION['HASH']);
-                if (isset($_SESSION['user'])) {
-                    header("location:http://localhost/Project/?action=Disparues");
-                }else{
-                    header("location:http://localhost/Project/?action=Individue");
+                $Disp=ASSOCIATION_MODEL::info_indiv($id,$_SESSION["HASH"]);
+                if ($Disp) {
+                    if (file_exists($Disp->photo)) {
+                        unlink($Disp->photo);
+                    }
+                    ASSOCIATION_MODEL::delet_Disp($id,$_SESSION['HASH']);
+                    if (isset($_SESSION['user'])) {
+                        header("location:http://localhost/Project/?action=Disparues");
+                    }else{
+                        header("location:http://localhost/Project/?action=Individue");
+                    }
                 }
             }
             
@@ -322,6 +328,41 @@ class CONTROLLER
         }else header("location:http://localhost/Project");
 
         if (isset($_POST["Modifier"])) {
+            function is_valid_image($file) {
+                $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+                return in_array($file['type'], $allowed_types);
+            }
+            function upload_image($file) {
+                if (isset($_SESSION['user'])) {
+                    $uploadDirectory = "Files/desparus/";
+                }elseif(isset($_SESSION['ass'])){
+                    $uploadDirectory = "Files/individus/";
+                }
+                $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $unique_name = uniqid(date("dmyHis")."_") . "." . $extension;
+                $destination_path = $uploadDirectory . $unique_name;
+                if (move_uploaded_file($file["tmp_name"], $destination_path)) {
+                    return $destination_path;
+                } else {
+                    return null;
+                }
+            }
+            if (isset($_FILES["Photo"])) {
+                if (is_valid_image($_FILES["Photo"])) {
+                    if (!empty($Disp->photo) && file_exists($Disp->photo)) {
+                        if ($_FILES["Photo"]['name'] != "" && $_FILES["Photo"]['error'] == 0) {
+                            # code...
+                            unlink($Disp->photo);
+                            $photo_path = upload_image($_FILES["Photo"]);
+                            if ($photo_path === null) {
+                                echo "<script>alert('Une erreur s\'est produite lors du téléchargement de l\'image. Réessayez plus tard.')</script>";
+                            }else{
+                                ASSOCIATION_MODEL::Update_img($photo_path,$_POST["INDI"],$_SESSION['HASH']);
+                            }
+                        }
+                    }
+                }
+            }
             if (isset($_POST["Nom"]) &&isset($_POST["INDI"])&& isset($_POST["Prenom"]) && isset($_POST["Naissance"]) && isset($_POST["dentree"])  && isset($_POST["Villa"])  && isset($_POST["Genner"])) {
                 
                 if (!empty($_POST["dentree"]) && !empty($_POST["Prenom"]) && !empty($_POST["Villa"])&&!empty($_POST["Naissance"])&&!empty($_POST["Nom"])&&!empty($_POST["Genner"])) {
@@ -345,9 +386,6 @@ class CONTROLLER
                             }else echo"<script>alert('Une erreur s'est produite lors de la modification. Réessayez plus tard. !!')</script>";
                         }else echo"<script>alert('Une erreur s'est produite lors de la modification. Réessayez plus tard. !!')</script>";
                 }else echo"<script>alert('Une erreur s'est produite lors de la modification. Réessayez plus tard. !!')</script>";
-            if (isset($_FILES[])) {
-                # code...
-            }
             
             }else echo"<script>alert('Remplissez toutes les données. !!')</script>";
         }

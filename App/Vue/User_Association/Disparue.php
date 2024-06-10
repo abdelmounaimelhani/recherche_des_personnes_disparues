@@ -9,12 +9,7 @@
             if (!isset($_GET["ASS"]) && !isset($_GET["USER"]) && !isset($_GET["hash"])):?>
                 <div class="d-flex justify-content-between p-2">
                     <a href="<?=$link?>" class="btn btn-outline-primary">Ajouter <?=$title?></a>
-                    <form action="" method="post">
-                        <div class="input-group">
-                            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" placeholder="Recherch">
-                        </div>
-                    </form>
+                    
                 </div>
             <?php endif;?>
             <div class="card-body px-0 pt-0 pb-2">
