@@ -318,35 +318,40 @@ class CONTROLLER
             if ($Disp) {
                 if (isset($_SESSION["user"])) $title="Disparue";
                 if (isset($_SESSION["ass"])) $title="Indiv";
-                if (isset($_POST["Modifier"])) {
-                        
-                }
-                include_once "./App/Vue/User_Association/Edit_disparue.php";
             }else header("location:http://localhost/Project");
         }else header("location:http://localhost/Project");
-    }
 
-    public static function Edit_Info_desparu()
-    {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (isset($_POST["Dateen"]) && isset($_POST["Prenom"]) && isset($_POST["Villa"])&&isset($_POST["datenai"])&&isset($_POST["nom"])&&isset($_POST["indv"])) {
-                if (!empty($_POST["Dateen"]) && !empty($_POST["Prenom"]) && !empty($_POST["Villa"])&&!empty($_POST["datenai"])&&!empty($_POST["nom"])&&!empty($_POST["indv"])) {
-                    $Dateen = DateTime::createFromFormat('Y-m-d', $_POST["Dateen"]);
-                    $datenai = DateTime::createFromFormat('Y-m-d', $_POST["datenai"]);
-                    if ($datenai != false && $Dateen!=false) {
-                        $id=$_POST["indv"];
-                        $asso=$_SESSION["ass"];
+        if (isset($_POST["Modifier"])) {
+            if (isset($_POST["Nom"]) &&isset($_POST["INDI"])&& isset($_POST["Prenom"]) && isset($_POST["Naissance"]) && isset($_POST["dentree"])  && isset($_POST["Villa"])  && isset($_POST["Genner"])) {
+                
+                if (!empty($_POST["dentree"]) && !empty($_POST["Prenom"]) && !empty($_POST["Villa"])&&!empty($_POST["Naissance"])&&!empty($_POST["Nom"])&&!empty($_POST["Genner"])) {
+
+                    $id=$_POST["INDI"];
+                        $genner=$_POST["Genner"];
+                        $asso=$_SESSION["HASH"];
                         $res=ASSOCIATION_MODEL::info_indiv($id,$asso);
+                        if (isset($_SESSION['ass'])) {
+                            $dateDisp=null;
+                            $dateentre=$_POST["dentree"];
+                        }else{
+                            $dateDisp=$_POST["dentree"];
+                            $dateentre=null;
+                        }
                         if ((bool) $res) {
-                            $res=ASSOCIATION_MODEL::edite_indiv($_POST["nom"],$_POST["Prenom"],$_POST["Dateen"],$_POST["datenai"],$_POST["Villa"],$id,$asso);
+                            $res=ASSOCIATION_MODEL::edite_indiv($_POST["Nom"],$_POST["Prenom"],$dateentre,$dateDisp,$_POST["Naissance"],$_POST["Villa"],$genner,$id,$asso);
                             if ($res) {
-                                echo json_encode(["code"=>0]);
-                            }else echo json_encode(["code"=>5]);
-                        }else echo json_encode(["code"=>4]);
-                    }else echo json_encode(["code"=>3]);
-                }else echo json_encode(["code"=>2]);
-            }else echo json_encode(["code"=>1]);
+                                $Disp=ASSOCIATION_MODEL::info_indiv($_GET["IDD"],$_SESSION["HASH"]);
+                                echo"<script>alert('La modification a été effectuée avec succès')</script>";
+                            }else echo"<script>alert('Une erreur s'est produite lors de la modification. Réessayez plus tard. !!')</script>";
+                        }else echo"<script>alert('Une erreur s'est produite lors de la modification. Réessayez plus tard. !!')</script>";
+                }else echo"<script>alert('Une erreur s'est produite lors de la modification. Réessayez plus tard. !!')</script>";
+            if (isset($_FILES[])) {
+                # code...
+            }
+            
+            }else echo"<script>alert('Remplissez toutes les données. !!')</script>";
         }
+        include_once "./App/Vue/User_Association/Edit_disparue.php";
     }
     
     

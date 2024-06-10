@@ -129,22 +129,25 @@ class ASSOCIATION_MODEL
         return $res;
     }
 
-    public static function edite_indiv($nom, $prenom, $date_entre, $date_N, $ville, $id, $Asso){
+    public static function edite_indiv($nom, $prenom, $date_entre,$date_disparition, $date_N, $ville,$Gennre, $id, $HASH){
         $conn=Connexion::Connexion();
-        $sql = "UPDATE individus 
-                SET nom = :nom, prenom = :prenom, date_entre = :date_entre, date_N = :date_N, ville = :ville
-                WHERE id = :id AND Asso = :Asso";
+        $sql = "UPDATE  disparu
+                SET nom = :nom, prenom = :prenom, date_entre = :date_entre, date_disparition = :date_disparition, date_N = :date_N, ville = :ville, Gennre = :Gennre
+                WHERE id = :id AND `HASH` = :HASH";
         $st = $conn->prepare($sql);
         $st->bindParam(':nom', $nom);
         $st->bindParam(':prenom', $prenom);
         $st->bindParam(':date_entre', $date_entre);
+        $st->bindParam(':date_disparition', $date_disparition);
         $st->bindParam(':date_N', $date_N);
         $st->bindParam(':ville', $ville);
+        $st->bindParam(':Gennre', $Gennre);
         $st->bindParam(':id', $id);
-        $st->bindParam(':Asso', $Asso);
+        $st->bindParam(':HASH', $HASH);
         return $st->execute();
 
     }
+
     public static function Update_img($photo,$id,$Asso){
         $conn=Connexion::Connexion();
         $sql = "UPDATE individus 

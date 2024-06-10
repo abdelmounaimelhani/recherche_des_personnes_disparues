@@ -41,6 +41,7 @@
                 <div class="table-responsive p-0">
                     <table class="table table-borderless align-items-center mb-0">
                         <form action="" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="INDI" value="<?=$_GET['IDD']?>">
                             <tbody>
                                 <tr>
                                     <td class="col-6">
@@ -107,7 +108,7 @@
                                     <td class="col-6">
                                         <div class="col-10 d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm text-white">Enregistrer</h6>
-                                            <input type="submit" name="sub" value="Modifier" class="btn btn-primary">
+                                            <input type="submit" name="Modifier" value="Modifier" class="btn btn-primary">
                                         </div>
                                     </td>
                                 </tr>
@@ -122,9 +123,9 @@
 <?php 
     $content = ob_get_clean();
     if (isset($_SESSION['user'])) {
-        $title = 'Ajouter Disparue';
+        $title = 'Modifier Disparue';
     }elseif(isset($_SESSION['ass'])){
-        $title = 'Ajouter individue';
+        $title = 'Modifier individue';
     }
     
     include_once 'App/Vue/Mastre.php'; 
