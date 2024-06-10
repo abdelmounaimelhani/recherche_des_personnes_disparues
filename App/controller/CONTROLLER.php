@@ -318,6 +318,9 @@ class CONTROLLER
             if ($Disp) {
                 if (isset($_SESSION["user"])) $title="Disparue";
                 if (isset($_SESSION["ass"])) $title="Indiv";
+                if (isset($_POST["Modifier"])) {
+                        
+                }
                 include_once "./App/Vue/User_Association/Edit_disparue.php";
             }else header("location:http://localhost/Project");
         }else header("location:http://localhost/Project");
@@ -424,7 +427,6 @@ class CONTROLLER
         }
         $nom="";
         $prenom="";
-        $photo="";
         $commente = USER_MODEL::Commentair_Post_User($id,true);
         $user=USER_MODEL::get_user($hash);
         if (!$user) {

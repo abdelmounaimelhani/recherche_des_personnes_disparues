@@ -40,6 +40,8 @@ if (isset($_GET['action'])) {
             case 'get_info_indi':return CONTROLLER::get_info_Di();
             case 'Pubinfo':return CONTROLLER::Pubinfo();
             case 'test': return include_once ("./test.php");
+            case 'Individue': return CONTROLLER::Get_disparus();
+            case 'Disparues': return CONTROLLER::Get_disparus();
         }
     }
     if (isset($_SESSION["user"]))
@@ -48,7 +50,6 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {  
             case 'Profile': return USER_CONTROLLER::Profile();
             case 'creat_desparu': return CONTROLLER::creat_desparu() ;
-            case 'Disparues': return CONTROLLER::Get_disparus();
             default: return include_once('App/Vue/404.php');
         }
     }
@@ -59,7 +60,6 @@ if (isset($_GET['action'])) {
             //association pages
             case 'creat_Indi': return CONTROLLER::creat_desparu();
             case 'info_indiv': return ASSOCIATION_CONTROLLER::Get_Info_Individus() ;
-            case 'Individue': return CONTROLLER::Get_disparus();
             case 'Profile': return ASSOCIATION_CONTROLLER::Profile();
 
             default: return include_once('App/Vue/404.php') ;

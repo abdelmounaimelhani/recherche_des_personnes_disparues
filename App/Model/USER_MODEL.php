@@ -186,7 +186,7 @@ class USER_MODEL{
                 when ah.HASH_ID=p.`HASH` then ass.nom
             END AS 'nom' , p.*
             FROM publication_comment p , usertable u ,user_hash uh,association ass ,ass_hash ah
-            WHERE (u.id=uh.`id-user` AND uh.HASH_ID=p.`HASH`) OR (ass.id=ah.id_ASS AND ah.HASH_ID=p.`HASH`)
+            WHERE ((u.id=uh.`id-user` AND uh.HASH_ID=p.`HASH`) OR (ass.id=ah.id_ASS AND ah.HASH_ID=p.`HASH`))
             AND id_publication = ?"
         );
         $st2->bindParam(1, $idP);

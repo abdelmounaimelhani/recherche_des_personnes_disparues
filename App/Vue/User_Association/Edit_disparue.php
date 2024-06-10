@@ -107,7 +107,7 @@
                                     <td class="col-6">
                                         <div class="col-10 d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm text-white">Enregistrer</h6>
-                                            <input type="submit" name="sub" value="Ajouter" class="btn btn-primary">
+                                            <input type="submit" name="sub" value="Modifier" class="btn btn-primary">
                                         </div>
                                     </td>
                                 </tr>

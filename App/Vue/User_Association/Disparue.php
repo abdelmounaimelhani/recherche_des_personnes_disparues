@@ -29,8 +29,11 @@
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     <?php 
-                            if (isset($_SESSION["ass"]) || isset($_GET["ASS"])) echo "Date d'entrée";
-                            elseif(isset($_SESSION["user"]) || isset($_GET["USER"])) echo "Date disparition";
+                            
+                            if (isset($_GET["ASS"])) echo "Date d'entrée";
+                            elseif (isset($_GET["USER"])) echo "Date disparition";
+                            elseif (isset($_SESSION["ass"])) echo "Date d'entrée";
+                            elseif(isset($_SESSION["user"])) echo "Date disparition";
                         ?>
                                 </th>
                                 <th
@@ -64,8 +67,11 @@
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     <p class="text-xs font-weight-bold mb-0">
-                                        <?php if (isset($_SESSION["ass"]) || isset($_GET["ASS"])) echo $indi->date_entre;
-                                        else echo $indi->date_disparition;    
+                                        <?php  
+                                        if (isset($_GET["ASS"])) echo $indi->date_entre;
+                                        elseif (isset($_GET["USER"])) echo $indi->date_disparition;
+                                        elseif (isset($_SESSION["ass"])) echo $indi->date_entre;
+                                        elseif (isset($_SESSION["user"])) echo $indi->date_disparition;
                                     ?>
                                         
                                     </p>
@@ -95,15 +101,8 @@
                                         <i class="fas fa-search text-sm opacity-10"></i> Serch
                                     </a>
                                 </td>
-                                <?php }else{ ?>
-                                    <td class="align-middle">
-                                        <a href="http://localhost/Project/?action=Recherch_desparu&IDD=<?=$indi->id?>&hash=<?=$_SESSION["HASH"]?>"
-                                            class="text-primary font-weight-bold text-xs d-block text-center"
-                                            title="Edit Disparue">
-                                            <i class="fas fa-search text-sm opacity-10"></i> Serch
-                                        </a>
-                                    </td>
                                 <?php } ?>
+                                    
                             </tr>
                             <?php endforeach; } else{ ?>
                             <tr>
