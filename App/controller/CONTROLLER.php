@@ -295,7 +295,8 @@ class CONTROLLER
                                 USER_MODEL::Creat_disparu($Nom,$Prenom,$dentree,$Naissance,$Photo,$Villa,$_SESSION["HASH"],$genner);
                                 $disc="Avis de disparition
                                 Monsieur/Madame $Nom $Prenom a disparu le $dentree à $Villa. Né(e) le $Naissance. Nous vous prions de nous contacter si vous l'avez vu(e). Merci.";
-                                USER_MODEL::Addpost($_SESSION["HASH"],$disc,$Photo);
+                                $iddisp=ASSOCIATION_MODEL::get_id_disp();
+                                USER_MODEL::Addpost($_SESSION["HASH"],$disc,$Photo,$iddisp);
                                 header("location:http://localhost/Project/?action=Disparues");
                                 
                             }elseif(isset($_SESSION['ass'])){
@@ -307,8 +308,9 @@ class CONTROLLER
                                 $disc .="le $dentree à $Villa.";
                                 if($Naissance != "") $disc.=" Né(e) le $Naissance";
                                 $disc.=" Nous invitons toute personne connaissant sa famille à nous contacter. Merci.";
-                                USER_MODEL::Addpost($_SESSION["HASH"],$disc,$Photo);
                                 ASSOCIATION_MODEL::Creat_indiv($Nom,$Prenom,$dentree,$Naissance,$Photo,$Villa,$_SESSION["HASH"],$genner);
+                                $iddisp=ASSOCIATION_MODEL::get_id_disp();
+                                USER_MODEL::Addpost($_SESSION["HASH"],$disc,$Photo,$iddisp);
                                 header("location:http://localhost/Project/?action=Individue");
                             }
                         }
@@ -358,6 +360,7 @@ class CONTROLLER
                                 echo "<script>alert('Une erreur s\'est produite lors du téléchargement de l\'image. Réessayez plus tard.')</script>";
                             }else{
                                 ASSOCIATION_MODEL::Update_img($photo_path,$_POST["INDI"],$_SESSION['HASH']);
+                                ASSOCIATION_MODEL::Update_img_post($photo_path,$_POST["INDI"],$_SESSION['HASH']);
                             }
                         }
                     }

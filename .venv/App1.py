@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app)
 
 logging.basicConfig(level=logging.DEBUG)
-
+ 
 def compare_faces(reference_path, image_paths):
     reference_image_path = 'D:/ABELMOUNAIM/App/XAMPP/htdocs/Project/' + reference_path
 

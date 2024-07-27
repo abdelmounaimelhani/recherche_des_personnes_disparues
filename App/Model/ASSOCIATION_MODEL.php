@@ -101,6 +101,13 @@ class ASSOCIATION_MODEL
         
         return $st->execute();
     }
+    public static function get_id_disp(){
+        $conn = Connexion::Connexion();
+        $st = $conn->prepare("SELECT MAX(id) as 'id' FROM disparu");
+        $st->execute();
+        return $st->fetch(PDO::FETCH_OBJ);
+        
+    }
     
     public static function get_indvs($HASH)
     {
@@ -119,7 +126,7 @@ class ASSOCIATION_MODEL
             $st->bindParam(':HASHID', $HASH);
         }else {
             $st=$conn->prepare("SELECT D.nom,D.prenom,D.date_N,D.Gennre,D.photo,D.ville,
-                                A.nom as 'Nomass',A.email,A.tele,A.ville,A.adress
+                                A.nom as 'Nomass',A.email,A.tele,A.ville,A.adress ,AH.`HASH_ID`
                                 FROM disparu D,association A, ass_hash AH
                                 WHERE D.`HASH`=AH.HASH_ID AND AH.id_ASS=A.id AND D.id=:id ");
             $st->bindParam(':id', $idind);
@@ -153,6 +160,18 @@ class ASSOCIATION_MODEL
         $sql = "UPDATE disparu 
                 SET  photo = :photo
                 WHERE id = :id AND `HASH` = :HASH";
+        $st = $conn->prepare($sql);
+        $st->bindParam(':photo', $photo);
+        $st->bindParam(':id', $id);
+        $st->bindParam(':HASH', $HASH);
+        return $st->execute();
+    }
+
+    public static function Update_img_post($photo,$id,$HASH){
+        $conn=Connexion::Connexion();
+        $sql = "UPDATE publication 
+                SET  photo = :photo
+                WHERE id_disp = :id AND `HASH` = :HASH";
         $st = $conn->prepare($sql);
         $st->bindParam(':photo', $photo);
         $st->bindParam(':id', $id);
@@ -270,7 +289,7 @@ class ASSOCIATION_MODEL
     }
     
     public static function get_info_Disp($id) {
-        $requte = "SELECT d.*, CONCAT(u.nom, ' ', u.prenom) AS 'nomC', u.email, u.tele
+        $requte = "SELECT d.*, CONCAT(u.nom, ' ', u.prenom) AS 'nomC', u.email, u.tele ,uh.`HASH_ID`
                    FROM disparu d
                    JOIN user_hash uh ON d.HASH = uh.HASH_ID
                    JOIN usertable u ON uh.`id-user` = u.id

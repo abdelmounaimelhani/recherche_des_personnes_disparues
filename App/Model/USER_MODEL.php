@@ -101,12 +101,15 @@ class USER_MODEL{
         return $res;
     }
 
-    public static function Addpost($id,$disc,$photo){
+    public static function Addpost($id,$disc,$photo,$iddisp){
         //Ajouter un Post
-        $st = Connexion::Connexion()->prepare("INSERT INTO `publication` (`id`, `HASH`, `discription`, `photo`, `datepub`) VALUES (NULL, ?, ?, ?, current_timestamp());");
+        var_dump($iddisp);
+        $st = Connexion::Connexion()->prepare("INSERT INTO `publication` (`id`, `HASH`, `discription`, `photo`, `datepub`,`id_disp`) 
+        VALUES (NULL, ?, ?, ?, current_timestamp(),?);");
         $st->bindParam(1, $id);
         $st->bindParam(2, $disc);
         $st->bindParam(3, $photo);
+        $st->bindParam(4, $iddisp->id);
         $res = $st->execute();
         return $res;
     }

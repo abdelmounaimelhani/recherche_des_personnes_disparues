@@ -66,7 +66,7 @@ function create_Dispa(disp) {
     // Creating the action division
     const Div_Action = creat_element("div", ["ms-auto", "text-end"]);
     const Action_Link = creat_element("a", ["btn", "btn-link", "text-dark", "px-3", "mb-0"]);
-    Action_Link.href = "javascript:;";
+    Action_Link.href = "http://localhost/Project/?action=Messge&id="+disp.HASH_ID;
     Action_Link.innerHTML = `<i class="ni ni-email-83 text-dark me-2" aria-hidden="true"></i>Missage`;
 
     Div_Action.append(Action_Link);
