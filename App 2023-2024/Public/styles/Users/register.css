@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Alkatra&family=Jost:ital,wght@0,400;0,500;1,400&family=Oswald:wght@300;400&family=Roboto:wght@100&family=Rubik+Doodle+Shadow&display=swap');
+
+*{
+    font-family: 'Alkatra';
+    font-weight: 400;
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+.containerdiv{
+    display: flex;
+    justify-content: flex-start;
+}
+.bg_img{
+    width:55%;
+    background-image: url('http://localhost/Project/Public/imgs/useradd.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.form-register{
+    width: 45%;
+    height: 100vh;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0px 2px 2px 1px #bbb8b8c2;
+}
+
+.form-register h1{
+    text-align: center;
+}
+.div_valid{
+    font-family: 'Poppins';
+    color: black;
+    text-align: center;
+}
+.error{
+    font-family: 'Poppins';
+    color: #ed143dc4;
+    text-align: center;
+}
+.form-group{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0;
+    align-items: center;
+}
+.form-group>label{
+    width: 40%;
+}
+
+.form-input{
+    all: initial;
+    font-family: 'Poppins'; 
+    margin: 4px auto;
+    width: 50%;
+    height: 20px;
+    padding: 6px;
+    border-bottom: 1px solid rgb(148, 147, 147);
+    border-radius: 2px;
+    
+}
+.form-input:hover{
+    border-bottom: 1.5px solid rgb(0, 0, 0);
+}
+.form-input:focus{
+    font-family: 'Poppins';
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+.form-input::placeholder { 
+    font-family: "Alkatra";
+    font-size: 16px;
+    opacity: 0.7;
+}
+.img-select{
+    width: 25px;
+    position: absolute;
+    right: 30px;
+}
+.form-btn{
+    all: initial;
+    font-family: 'Alkatra';
+    width: 100px;
+    height: 25px;
+    margin-left: 25px;
+    text-align: center;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.form-btn:hover{
+    border:1px solid rgb(62, 62, 62) ;
+    background-color: rgb(27, 27, 27);
+    color: #f0f0f0;
+}
+
+.btn-error{
+    animation-name: link;
+    animation-duration: 0.5s;
+    animation-iteration-count: 2;
+}
+
+@keyframes link {
+    0%,100%{position: relative;left: 0; background-color: black;}
+    40%,60%,80%{position: relative;left: 2px;background-color: rgb(200, 9, 9);}
+    50%,70%,90%{position: relative;left: -2px;background-color: rgb(200, 9, 9);} 
+}
+
+.group-link{
+    display: inline-flex;
+    justify-content: space-between;
+    position: relative;
+    left: 25%;
+    width: 250px;    
+}
+.form-link{
+    all: initial;
+    cursor: pointer;
+    font-family: 'Alkatra';
+    transition: 1s;
+}
+.form-link:hover{
+    border-bottom: 1px solid black;
+    border-top: 1px solid black ;
+}
+
+/**/
